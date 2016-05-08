@@ -16,7 +16,7 @@
         <form action="/user" method="post">
             <fieldset class="clearfix">
                 <c:if test="${status == false}">
-                    <p>False login or pass </p>
+                    <p>False login or pass  </p>
                     </c:if>
                 <p><span class="fontawesome-user"></span><input  name="email" type="text" value="email" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
                 <p><span class="fontawesome-lock"></span><input name="pass" type="password"  value="" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
