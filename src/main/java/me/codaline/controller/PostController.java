@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class PostController {
             model.addAttribute("page", page);
         else model.addAttribute("page", 1);
         model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
+//        req.getRequestDispatcher("index2.jsp").forward(req,resp);
         return "index2";
     }
 
