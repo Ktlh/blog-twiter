@@ -1,7 +1,10 @@
 package me.codaline.dao;
 
 import me.codaline.model.Post;
+import me.codaline.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,9 @@ public class PostDao {
     }
 
     public List<Post> getPosts() {
-        return sessionFactory.getCurrentSession().createCriteria(Post.class).list();
+
+
+        return  sessionFactory.getCurrentSession().createCriteria(Post.class).addOrder(Property.forName("id").desc() ).list();
+
     }
 }

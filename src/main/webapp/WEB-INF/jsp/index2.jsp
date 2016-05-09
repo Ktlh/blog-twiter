@@ -60,7 +60,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </header>
                 <p>${p.context}</p>
 
-                <a href="#" class="image featured"><img src="resources/images/pic01.jpg" alt=""/></a>
+                <a href="#" class="image featured"><img height="100%" width="100%" src="${p.image}" alt=""/></a>
 
                 <c:if test="${ac == true}">
 
@@ -74,24 +74,6 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </c:if>
 
                 </c:forEach>
-                <c:if test="${ac == true}">
-
-                <form action="addPost" method="post">
-                    <input  type="text"  name="title" required>
-                    <input  type="text" name="context" required>
-
-                    <input name="page" value="${page}" type="hidden">
-                    <input type="submit" name="add" value="add" align="right">
-                    <%--<c:forEach items="${images}" var="img">--%>
-
-                        <%--<select name="image">--%>
-                            <%--<option value="${img}" style="background: url(${img}) no-repeat; padding-left: 20px; width: 100px; height: 100px;" > ${img}</option>--%>
-                        <%--</select>--%>
-                    <%--</c:forEach>--%>
-
-                </form>
-                </c:if>
-
 
                 <!-- Pagination -->
                 <div class="pagination">
@@ -172,7 +154,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li class="current"><a href="#">Post</a></li>
+                <li class="current"><a href="/">Post</a></li>
 
                 <c:if test="${ac == null || ac == false}">
 
@@ -183,7 +165,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="upload">Save Files</a></li>
+                    <li><a href="addPost">Add  Post / Images</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 

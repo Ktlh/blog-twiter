@@ -1,18 +1,24 @@
 package me.codaline.controller;
 
 
+import me.codaline.model.CrunchifyFileUpload;
 import me.codaline.model.Post;
+import me.codaline.service.ImageService;
 import me.codaline.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +27,20 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostService service;
+    @Autowired
+    ImageService imageService;
+
+    @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
+    public String crunchifySave(
+            @ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
+            Model map, HttpServletRequest request) throws IllegalStateException, IOException {
 
 
+        imageService.saveImages(request,uploadForm);
+
+        map.addAttribute("images",imageService.getImages(request));
+        return "index1";
+    }
     @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     String createPost(ModelMap model, String title, String context, String date, String image,String page) {
         service.createPost(title, context, date, image);
