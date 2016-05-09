@@ -81,9 +81,9 @@
                     <c:if test="${count == 0}">
                         <%--ф бага з infinity стр.--%>
                     <script>
-                        var page=${page};
-                        page=page-1;
-                        window.location.assign("http://localhost:8080/?page="+page);
+                        var pages=${pages};
+
+                        window.location.assign("http://localhost:8080/?page="+pages);
                     </script>
                     </c:if>
                     <c:if test="${ac == true}">
