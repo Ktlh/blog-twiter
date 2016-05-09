@@ -5,7 +5,7 @@
 <head>
     <meta content="charset=utf-8">
     <title>FlexSlider 2</title>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="viewport" content="">
 
     <link rel="stylesheet" href="resources/css/flexslider.css" type="text/css" media="screen"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -39,7 +39,7 @@
 
                     <c:forEach items="${images}" var="name">
                         <li>
-                            <img height="1000" src="<c:url value='${name}'/> " />
+                            <img height="90%" src="<c:url value='${name}'/> " />
                         </li>
                     </c:forEach>
 
