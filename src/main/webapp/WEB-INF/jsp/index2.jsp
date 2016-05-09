@@ -16,7 +16,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <script src="resources/js/jquery.min.js"></script>
     <script src="resources/js/skel.min.js"></script>
     <script src="resources/js/skel-layers.min.js"></script>
-    <script src="resources/js/init.js"></script>
+    <script src="/resources/js/init.js"></script>
 
     <link rel="stylesheet" href="resources/css/skel.css"/>
     <link rel="stylesheet" href="resources/css/style.css"/>
