@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@SessionAttributes("access")
+@SessionAttributes({"access", "user"})
 public class UserController {
 
     @Autowired
@@ -41,18 +41,19 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-
     String saveUser(
             ModelMap modelMap,
-           String firstName,
+            String firstName,
             String lastName,
             String email,
             String pass
-    )  {
+    ) {
         User user = service.createUser(firstName, lastName, email, pass);
         modelMap.addAttribute("user", user);
         List<Post> posts = PostService.getPosts();
         modelMap.addAttribute("posts", posts);
+        modelMap.addAttribute("page", 1);
+        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
     }
 
@@ -70,30 +71,33 @@ public class UserController {
 
         try {
 
-            if (!user.getEmail().equals(null) ) {
-                modelMap.addAttribute("user", user);
-               modelMap.addAttribute("access",true);
+            if (!user.getEmail().equals(null)) {
+                modelMap.addAttribute("user", user);modelMap.addAttribute("access", true);
                 List<Post> posts = PostService.getPosts();
                 modelMap.addAttribute("posts", posts);
+                modelMap.addAttribute("page", 1);
+                modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
                 return "index2";
-            }
-            else {
+            } else {
                 return "logIn";
             }
 
 
         } catch (NullPointerException e) {
-            System.out.println("null");
+
             modelMap.addAttribute("status", "false");
             return "logIn";
 
         }
     }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    String logOut(ModelMap model){
+    String logOut(ModelMap model) {
         List<Post> posts = PostService.getPosts();
         model.addAttribute("posts", posts);
-        model.addAttribute("access","false");
+        model.addAttribute("access", "false");
+        model.addAttribute("page", 1);
+        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
     }
 

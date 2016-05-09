@@ -19,16 +19,22 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
-@SessionAttributes("access")
+@SessionAttributes({"access","user"})
+
 public class MyController {
     @Autowired
     PostService service;
 
     @RequestMapping("/")
-    String index(ModelMap model) {
+    String index(ModelMap model, String page) {
         java.util.List<Post> posts = service.getPosts();
         model.addAttribute("posts", posts);
-        model.addAttribute("access","false");
+
+
+        if (page != null)
+            model.addAttribute("page", page);
+        else model.addAttribute("page", 1);
+        model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
         return "index2";
     }
 
@@ -42,10 +48,7 @@ public class MyController {
         return "registration";
     }
 
-    @RequestMapping("/posts")
-    String posts() {
-        return "posts";
-    }
+
 
 
     @RequestMapping("/gallery")
@@ -56,15 +59,15 @@ public class MyController {
         List imageList = new List();
 
 
-        System.out.println(context.getRealPath("") + "resources\\images\\");
+
         File myFolder2 = new File(context.getRealPath("") + File.separator + "resources\\images\\");
         files = myFolder2.listFiles();
 
         for (File file : files) {
             //resp.getWriter().append("\n"+ file.getName());
             String s = file.getPath();
-            s= s.substring(s.indexOf("resources")-1,s.length());
-            System.out.println(s);
+            s = s.substring(s.indexOf("resources") - 1, s.length());
+
             imageList.add(s);
         }
 

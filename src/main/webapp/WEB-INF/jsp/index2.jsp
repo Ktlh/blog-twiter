@@ -35,12 +35,17 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 <!-- Wrapper -->
 <div id="wrapper">
     <c:set var="ac" scope="session" value="${access}"/>
+    <c:if test="${page == null}">
+
+        <c:set var="page" scope="session" value="1"/>
+    </c:if>
     <!-- Content -->
     <div id="content">
         <div class="inner">
 
             <!-- Post -->
-            <c:forEach var="p" items="${posts}">
+            <c:forEach begin="${(page*2)-2}" end="${(page*2)-1}" var="p" items="${posts}">
+
 
             <article class="box post post-excerpt">
 
@@ -57,41 +62,100 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                 <a href="#" class="image featured"><img src="resources/images/pic01.jpg" alt=""/></a>
 
-                    <c:if test="${ac == true}">
+                <c:if test="${ac == true}">
 
                 <form action="deletePost" method="post">
 
-                    Delete Post № <input type="submit" id="delete" name="id" value="${p.id}"   align="right">
 
+                    Delete Post  <input type="submit"  name="id" value="${p.id}" align="right">
+
+                    <input name="page" value="${page}" type="hidden">
                 </form>
-            </c:if>
+                </c:if>
 
                 </c:forEach>
                 <c:if test="${ac == true}">
 
                 <form action="addPost" method="post">
-                    <input id="title" type="text" name="title" required>
-                    <input id="context" type="text" name="context" required>
+                    <input  type="text"  name="title" required>
+                    <input  type="text" name="context" required>
 
-                    <input   type="submit" name="add" value="add"  align="right">
+                    <input name="page" value="${page}" type="hidden">
+                    <input type="submit" name="add" value="add" align="right">
+                    <%--<c:forEach items="${images}" var="img">--%>
+
+                        <%--<select name="image">--%>
+                            <%--<option value="${img}" style="background: url(${img}) no-repeat; padding-left: 20px; width: 100px; height: 100px;" > ${img}</option>--%>
+                        <%--</select>--%>
+                    <%--</c:forEach>--%>
 
                 </form>
-            </c:if>
-
+                </c:if>
 
 
                 <!-- Pagination -->
                 <div class="pagination">
                     <!--<a href="#" class="button previous">Previous Page</a>-->
+
                     <div class="pages">
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <span>&hellip;</span>
-                        <a href="#">20</a>
+
+                        <c:choose>
+                            <c:when test="${page>3}">
+                                <a href="/?page=${page-3}">${page-3}</a>
+                                <a href="/?page=${page-2}">${page-2}</a>
+                                <a href="/?page=${page-1}">${page-1}</a>
+                            </c:when>
+                            <c:when test="${page>2}">
+                                <a href="/?page=${page-2}">${page-2}</a>
+                                <a href="/?page=${page-1}">${page-1}</a>
+                            </c:when>
+                            <c:when test="${page>1}">
+                                <a href="/?page=${page-1}">${page-1}</a>
+                            </c:when>
+
+                        </c:choose>
+                        <a href="/?page=${page}" class="active">${page}</a>
+
+                        <c:choose>
+                            <c:when test="${pages > page +4}">
+                                <a href="/?page=${page+1}">${page+1}</a>
+                                <a href="/?page=${page+2}">${page+2}</a>
+                                <a href="/?page=${page+3}">${page+3}</a>
+                                <a href="/?page=${page+4}">${page+4}</a>
+                            </c:when>
+                            <c:when test="${pages > page +3}">
+                                <a href="/?page=${page+1}">${page+1}</a>
+                                <a href="/?page=${page+2}">${page+2}</a>
+                                <a href="/?page=${page+3}">${page+3}</a>
+                            </c:when>
+                            <c:when test="${pages > page +2}">
+                                <a href="/?page=${page+1}">${page+1}</a>
+                                <a href="/?page=${page+2}">${page+2}</a>
+                            </c:when>
+                            <c:when test="${pages > page +1}">
+                                <a href="/?page=${page+1}">${page+1}</a>
+                            </c:when>
+
+
+                        </c:choose>
+
+
+                        <c:if test="${page < pages}">
+
+
+                            <span>&hellip;</span>
+                            <a href="/?page=${pages}">${pages}</a>
+                        </c:if>
                     </div>
-                    <a href="#" class="button next">Next Page</a>
+
+                    <c:if test="${page < pages}">
+
+                        <a href="/?page=${page+1}" class="button next">Next Page</a>
+                    </c:if>
+                    <c:if test="${page > 1}">
+
+                        <a href="/?page=${page-1}" name="page" class="button next">Previous Page</a>
+                    </c:if>
                 </div>
 
         </div>
@@ -103,14 +167,14 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <!-- Logo -->
 
-        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName}</c:if> </a></h1>
+        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
 
         <!-- Nav -->
         <nav id="nav">
             <ul>
                 <li class="current"><a href="#">Post</a></li>
 
-                <c:if test="${ac == false}">
+                <c:if test="${ac == null || ac == false}">
 
                     <li><a href="registration">Registration</a></li>
                     <li><a href="login">Log In</a></li>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
@@ -48,8 +49,13 @@
     </div>
 
 </div>
+<%--<select name="image">--%>
+<%--<c:forEach items="${images}" var="img">--%>
 
 
+    <%--<option value="${img}"  data-img-src="resources/images/GvDyI1fh8Uw.jpg"  > 121</option>--%>
 
+<%--</c:forEach>--%>
+<%--</select>--%>
 </body>
 </html>
