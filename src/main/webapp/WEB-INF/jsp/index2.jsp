@@ -73,11 +73,38 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </form>
                 </c:if>
 
-                </c:forEach>
+                    </c:forEach>
+                    <c:if test="${count == 0}">
+                        <%--ф бага з infinity стр.--%>
+                    <script>
+                        var pages=${pages};
+              
 
-                <!-- Pagination -->
-                <div class="pagination">
-                    <!--<a href="#" class="button previous">Previous Page</a>-->
+                        window.location.assign("http://localhost:8080/?page="+pages);
+                    </script>
+                    </c:if>
+                    <c:if test="${ac == true}">
+
+                    <form action="addPost" method="post">
+                        <input type="text" name="title" required>
+                        <input type="text" name="context" required>
+
+                        <input name="page" value="${page}" type="hidden">
+                        <input type="submit" name="add" value="add" align="right">
+                            <%--<c:forEach items="${images}" var="img">--%>
+
+                            <%--<select name="image">--%>
+                            <%--<option value="${img}" style="background: url(${img}) no-repeat; padding-left: 20px; width: 100px; height: 100px;" > ${img}</option>--%>
+                            <%--</select>--%>
+                            <%--</c:forEach>--%>
+
+                    </form>
+                    </c:if>
+
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <!--<a href="#" class="button previous">Previous Page</a>-->
 
                     <div class="pages">
 
