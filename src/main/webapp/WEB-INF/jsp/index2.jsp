@@ -12,19 +12,19 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
     <!--[if lte IE 8]>
-    <script src="css/ie/html5shiv.js"></script><![endif]-->
-    <script src="resources/js/jquery.min.js"></script>
-    <script src="resources/js/skel.min.js"></script>
-    <script src="resources/js/skel-layers.min.js"></script>
-    <script src="resources/js/init.js"></script>
+    <script src="../../css/ie/html5shiv.js"></script><![endif]-->
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/skel.min.js"></script>
+    <script src="../../resources/js/skel-layers.min.js"></script>
+    <script src="../../resources/js/init.js"></script>
 
-    <link rel="stylesheet" href="resources/css/skel.css"/>
-    <link rel="stylesheet" href="resources/css/style.css"/>
-    <link rel="stylesheet" href="resources/css/style-desktop.css"/>
-    <link rel="stylesheet" href="resources/css/style-wide.css"/>
+    <link rel="stylesheet" href="../../resources/css/skel.css"/>
+    <link rel="stylesheet" href="../../resources/css/style.css"/>
+    <link rel="stylesheet" href="../../resources/css/style-desktop.css"/>
+    <link rel="stylesheet" href="../../resources/css/style-wide.css"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="resources/css/ie/v8.css"/><![endif]-->
+    <link rel="stylesheet" href="../../resources/css/ie/v8.css"/><![endif]-->
 </head>
 <!--
     Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
@@ -73,7 +73,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </form>
                 </c:if>
 
-                </c:forEach>
+                    </c:forEach>
+                    <c:if test="${count == 0}">
+                        <%--ф бага з infinity стр.--%>
+                    <script>
+                        var pages=${pages};
+              
 
                 <!-- Pagination -->
                 <div class="pagination">
@@ -121,9 +126,62 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                         </c:choose>
 
+                        <div class="pages">
+
+                            <c:choose>
+                                <c:when test="${page>3}">
+                                    <a href="/?page=${page-3}">${page-3}</a>
+                                    <a href="/?page=${page-2}">${page-2}</a>
+                                    <a href="/?page=${page-1}">${page-1}</a>
+                                </c:when>
+                                <c:when test="${page>2}">
+                                    <a href="/?page=${page-2}">${page-2}</a>
+                                    <a href="/?page=${page-1}">${page-1}</a>
+                                </c:when>
+                                <c:when test="${page>1}">
+                                    <a href="/?page=${page-1}">${page-1}</a>
+                                </c:when>
+
+                            </c:choose>
+                            <a href="/?page=${page}" class="active">${page}</a>
+
+                            <c:choose>
+                                <c:when test="${pages > page +4}">
+                                    <a href="/?page=${page+1}">${page+1}</a>
+                                    <a href="/?page=${page+2}">${page+2}</a>
+                                    <a href="/?page=${page+3}">${page+3}</a>
+                                    <a href="/?page=${page+4}">${page+4}</a>
+                                </c:when>
+                                <c:when test="${pages > page +3}">
+                                    <a href="/?page=${page+1}">${page+1}</a>
+                                    <a href="/?page=${page+2}">${page+2}</a>
+                                    <a href="/?page=${page+3}">${page+3}</a>
+                                </c:when>
+                                <c:when test="${pages > page +2}">
+                                    <a href="/?page=${page+1}">${page+1}</a>
+                                    <a href="/?page=${page+2}">${page+2}</a>
+                                </c:when>
+                                <c:when test="${pages > page +1}">
+                                    <a href="/?page=${page+1}">${page+1}</a>
+                                </c:when>
+
+
+                            </c:choose>
+
+
+                            <c:if test="${page < pages}">
+
+
+                                <span>&hellip;</span>
+                                <a href="/?page=${pages}">${pages}</a>
+                            </c:if>
+                        </div>
 
                         <c:if test="${page < pages}">
 
+                            <a href="/?page=${page+1}" class="button next">Next Page</a>
+                        </c:if>
+                        <c:if test="${page > 1}">
 
                             <span>&hellip;</span>
                             <a href="/?page=${pages}">${pages}</a>
@@ -143,6 +201,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         </div>
     </div>
 
+            <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
 
     <!-- Sidebar -->
     <div id="sidebar">
@@ -164,6 +223,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <li><a href="gallery">Gallery</a></li>
                 <c:if test="${ac ==true}">
 
+            <!-- Search -->
+            <section class="box search">
+                <form method="post" action="#">
+                    <input type="text" class="text" name="search" placeholder="Search"/>
+                </form>
+            </section>
 
                     <li><a href="addPost">Add  Post / Images</a></li>
                     <li><a href="logout">Log Out</a></li>

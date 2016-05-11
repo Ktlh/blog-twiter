@@ -1,4 +1,4 @@
-package me.codaline;
+package me.codaline.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
