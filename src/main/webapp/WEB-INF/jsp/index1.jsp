@@ -13,8 +13,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
     <!--[if lte IE 8]>
-    <script src="css/ie/html5shiv.js"></script><![endif]-->
-    <script src="resources/js/jquery.min.js"></script>
+    <script src="../../css/ie/html5shiv.js"></script><![endif]-->
+    <script src="../../resources/js/jquery.min.js"></script>
     <script src="resources/js/skel.min.js"></script>
     <script src="resources/js/skel-layers.min.js"></script>
     <script src="resources/js/init.js"></script>
@@ -22,7 +22,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <link rel="stylesheet" href="resources/css/skel.css"/>
     <link rel="stylesheet" href="resources/css/style.css"/>
     <link rel="stylesheet" href="resources/css/style-desktop.css"/>
-    <link rel="stylesheet" href="resources/css/style-wide.css"/>
+    <link rel="stylesheet" href="../../resources/css/style-wide.css"/>
 
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="resources/css/ie/v8.css"/><![endif]-->

@@ -1,4 +1,4 @@
-package me.codaline;
+package me.codaline.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
