@@ -8,17 +8,17 @@ function DeletePost(id) {
     //var email = $("#email").val();
     //var firstName = document.getElemtentById("fistname").value;
     $.post("/deletePost", {
-        //fName: firstName,
-        //lName: lastName,
-        //e: email
-        id: id
-    }
-      , function(data) {
-        //var json = JSON.parse(data);
+            //fName: firstName,
+            //lName: lastName,
+            //e: email
+            id: id
+        }
+        , function(data) {
+            //var json = JSON.parse(data);
 
             window.location.reload();
-          //  alert(data);
-      //  $("#acontent").html(data);
-    }
+            //  alert(data);
+            //  $("#acontent").html(data);
+        }
     )
 }

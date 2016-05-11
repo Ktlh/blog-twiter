@@ -17,6 +17,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <script src="../../resources/js/skel.min.js"></script>
     <script src="../../resources/js/skel-layers.min.js"></script>
     <script src="../../resources/js/init.js"></script>
+    <script src="../../resources/js/main.js"></script>
 
     <link rel="stylesheet" href="../../resources/css/skel.css"/>
     <link rel="stylesheet" href="../../resources/css/style.css"/>
@@ -44,7 +45,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <div class="inner">
 
             <!-- Post -->
+            <c:set var="count" scope="session" value="0"/>
             <c:forEach begin="${(page*2)-2}" end="${(page*2)-1}" var="p" items="${posts}">
+
 
 
             <article class="box post post-excerpt">
@@ -62,27 +65,22 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                 <a href="#" class="image featured"><img height="100%" width="100%" src="${p.image}" alt=""/></a>
 
+                    <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
 
-                <form action="deletePost" method="post">
-
-
-                    Delete Post  <input type="submit"  name="id" value="${p.id}" align="right">
-
-                    <input name="page" value="${page}" type="hidden">
-                </form>
+                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})"></button>
                 </c:if>
 
-                    </c:forEach>
-                    <c:if test="${count == 0}">
-                        <%--ф бага з infinity стр.--%>
-                    <script>
-                        var pages=${pages};
-              
 
-                        window.location.assign("http://localhost:8080/?page="+pages);
-                    </script>
-                    </c:if>
+                </c:forEach>
+                <c:if test="${count == 0}">
+                    <%--ф бага з infinity стр.--%>
+                <script>
+                    var pages=${pages};
+
+                    window.location.assign("http://localhost:8080/?page="+pages);
+                </script>
+                </c:if>
                     <c:if test="${ac == true}">
 
                     <form action="addPost" method="post">
