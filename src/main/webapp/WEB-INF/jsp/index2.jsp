@@ -68,7 +68,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                     <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
 
-                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})"></button>
+                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post</button>
+                <button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})"Edit></button>
                 </c:if>
 
 
@@ -83,20 +84,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </c:if>
                     <c:if test="${ac == true}">
 
-                    <form action="addPost" method="post">
-                        <input type="text" name="title" required>
-                        <input type="text" name="context" required>
 
-                        <input name="page" value="${page}" type="hidden">
-                        <input type="submit" name="add" value="add" align="right">
-                            <%--<c:forEach items="${images}" var="img">--%>
-
-                            <%--<select name="image">--%>
-                            <%--<option value="${img}" style="background: url(${img}) no-repeat; padding-left: 20px; width: 100px; height: 100px;" > ${img}</option>--%>
-                            <%--</select>--%>
-                            <%--</c:forEach>--%>
-
-                    </form>
                     </c:if>
 
 
@@ -190,7 +178,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="addPost">Add  Post / Images</a></li>
+                    <li><a href="addPost">Add  Post</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 

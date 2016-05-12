@@ -9,11 +9,11 @@ public class User {
 
     @Id
     @GeneratedValue
-    int id;
-    String firstName;
-    String lastName;
-    String email;
-    String pass;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String pass;
 
     public String getEmail() {
         return email;
