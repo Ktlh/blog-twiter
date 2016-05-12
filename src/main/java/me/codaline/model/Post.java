@@ -1,8 +1,6 @@
 package me.codaline.model;
 
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,12 +10,11 @@ import javax.persistence.Id;
 public class Post {
     @Id
     @GeneratedValue
-    int id;
-    String title;
-    String context;
-    String date;
-    String image;
-
+    private int id;
+    private String title;
+    private String context;
+    private String date;
+    private String image;
 
 
     public void setImage(String image) {

@@ -21,7 +21,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
-@SessionAttributes({"access","user"})
+@SessionAttributes({"access", "user"})
 
 public class MyController {
     @Autowired
@@ -38,7 +38,7 @@ public class MyController {
         if (page != null)
             model.addAttribute("page", page);
         else model.addAttribute("page", 1);
-        model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
+        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
     }
 
@@ -46,9 +46,10 @@ public class MyController {
     String logIn() {
         return "logIn";
     }
-    @RequestMapping(value = "/addPost" , method = RequestMethod.GET)
+
+    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
     String addPost(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images",imageService.getImages(request));
+        modelMap.addAttribute("images", imageService.getImages(request));
         return "index1";
     }
 
@@ -58,11 +59,9 @@ public class MyController {
     }
 
 
-
-
     @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images",imageService.getImages(request));
+        modelMap.addAttribute("images", imageService.getImages(request));
         return "gallery";
     }
 

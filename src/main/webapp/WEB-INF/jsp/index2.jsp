@@ -7,24 +7,25 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 -->
 <html>
 <head>
-    <title>Blog</title>
+    <title>Blog-twiter</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
     <!--[if lte IE 8]>
-    <script src="css/ie/html5shiv.js"></script><![endif]-->
-    <script src="resources/js/jquery.min.js"></script>
-    <script src="resources/js/skel.min.js"></script>
-    <script src="resources/js/skel-layers.min.js"></script>
-    <script src="resources/js/init.js"></script>
+    <script src="../../css/ie/html5shiv.js"></script><![endif]-->
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/skel.min.js"></script>
+    <script src="../../resources/js/skel-layers.min.js"></script>
+    <script src="../../resources/js/init.js"></script>
+    <script src="../../resources/js/main.js"></script>
 
-    <link rel="stylesheet" href="resources/css/skel.css"/>
-    <link rel="stylesheet" href="resources/css/style.css"/>
-    <link rel="stylesheet" href="resources/css/style-desktop.css"/>
-    <link rel="stylesheet" href="resources/css/style-wide.css"/>
+    <link rel="stylesheet" href="../../resources/css/skel.css"/>
+    <link rel="stylesheet" href="../../resources/css/style.css"/>
+    <link rel="stylesheet" href="../../resources/css/style-desktop.css"/>
+    <link rel="stylesheet" href="../../resources/css/style-wide.css"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="resources/css/ie/v8.css"/><![endif]-->
+    <link rel="stylesheet" href="../../resources/css/ie/v8.css"/><![endif]-->
 </head>
 <!--
     Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
@@ -44,7 +45,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <div class="inner">
 
             <!-- Post -->
+            <c:set var="count" scope="session" value="0"/>
             <c:forEach begin="${(page*2)-2}" end="${(page*2)-1}" var="p" items="${posts}">
+
 
 
             <article class="box post post-excerpt">
@@ -62,22 +65,32 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                 <a href="#" class="image featured"><img height="100%" width="100%" src="${p.image}" alt=""/></a>
 
+                    <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
 
-                <form action="deletePost" method="post">
-
-
-                    Delete Post  <input type="submit"  name="id" value="${p.id}" align="right">
-
-                    <input name="page" value="${page}" type="hidden">
-                </form>
+                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post</button>
+                <button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})"Edit></button>
                 </c:if>
 
-                </c:forEach>
 
-                <!-- Pagination -->
-                <div class="pagination">
-                    <!--<a href="#" class="button previous">Previous Page</a>-->
+                </c:forEach>
+                <c:if test="${count == 0}">
+                    <%--ф бага з infinity стр.--%>
+                <script>
+                    var pages=${pages};
+
+                    window.location.assign("http://localhost:8080/?page="+pages);
+                </script>
+                </c:if>
+                    <c:if test="${ac == true}">
+
+
+                    </c:if>
+
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <!--<a href="#" class="button previous">Previous Page</a>-->
 
                     <div class="pages">
 
@@ -165,7 +178,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="addPost">Add  Post / Images</a></li>
+                    <li><a href="addPost">Add  Post</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 
