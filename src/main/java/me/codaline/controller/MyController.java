@@ -41,12 +41,13 @@ public class MyController {
         model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
         return "index2";
     }
+//
+//    @RequestMapping("/login")
+//    String logIn() {
+//        return "login";
+//    }
 
-    @RequestMapping("/login")
-    String logIn() {
-        return "logIn";
-    }
-    @RequestMapping(value = "/addPost" , method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/addPost" , method = RequestMethod.GET)
     String addPost(ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("images",imageService.getImages(request));
         return "index1";
@@ -65,6 +66,7 @@ public class MyController {
         modelMap.addAttribute("images",imageService.getImages(request));
         return "gallery";
     }
+
 
 
 }

@@ -8,8 +8,20 @@
     <version>1.0-SNAPSHOT</version>
     <name>springTemplate</name>
 
+    <repositories>
+        <!-- ... possibly other repository elements ... -->
+        <repository>
+            <id>spring-snapshot</id>
+            <name>Spring Snapshot Repository</name>
+            <url>https://repo.spring.io/snapshot</url>
+        </repository>
+    </repositories>
     <properties>
         <spring.version>4.0.2.RELEASE</spring.version>
+
+        <javax.servlet>3.0.1</javax.servlet>
+        <jstl.version>1.2</jstl.version>
+        <spring.securiry>3.2.0.RELEASE</spring.securiry>
         <hibernate.version>4.3.4.Final</hibernate.version>
     </properties>
 
@@ -113,8 +125,8 @@
             <version>20090211</version>
         </dependency>
         <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -126,5 +138,25 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.2</version>
         </dependency>
+        <!-- Spring Security -->
+
+
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.2.0.RELEASE</version>
+        </dependency>
+
     </dependencies>
 </project>

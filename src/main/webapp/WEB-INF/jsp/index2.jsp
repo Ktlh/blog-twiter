@@ -174,7 +174,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <!-- Logo -->
 
-        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
+        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${username }</c:if> </a></h1>
 
         <!-- Nav -->
         <nav id="nav">
