@@ -7,7 +7,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 -->
 <html>
 <head>
-    <title>Blog-twiter</title>
+    <title>Blog</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -68,8 +68,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                     <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
 
-                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post</button>
-                <button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})"Edit></button>
+                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})"></button>
                 </c:if>
 
 
@@ -84,7 +83,20 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </c:if>
                     <c:if test="${ac == true}">
 
+                    <form action="addPost" method="post">
+                        <input type="text" name="title" required>
+                        <input type="text" name="context" required>
 
+                        <input name="page" value="${page}" type="hidden">
+                        <input type="submit" name="add" value="add" align="right">
+                            <%--<c:forEach items="${images}" var="img">--%>
+
+                            <%--<select name="image">--%>
+                            <%--<option value="${img}" style="background: url(${img}) no-repeat; padding-left: 20px; width: 100px; height: 100px;" > ${img}</option>--%>
+                            <%--</select>--%>
+                            <%--</c:forEach>--%>
+
+                    </form>
                     </c:if>
 
 
@@ -162,7 +174,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <!-- Logo -->
 
-        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
+        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${username }</c:if> </a></h1>
 
         <!-- Nav -->
         <nav id="nav">
@@ -178,7 +190,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="addPost">Add  Post</a></li>
+                    <li><a href="addPost">Add  Post / Images</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 
@@ -295,6 +307,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <ul id="copyright">
             <li>&copy; Untitled.</li>
             <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            <li>Developed by : <br> <a href="https://vk.com/id86063569">Io</a> and <a href="https://vk.com/id183792251">Ktulhu</a> </li>
         </ul>
 
     </div>

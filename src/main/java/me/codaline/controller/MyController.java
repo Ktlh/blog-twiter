@@ -5,6 +5,10 @@ import me.codaline.service.ImageService;
 import me.codaline.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +25,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
-@SessionAttributes({"access", "user"})
+@SessionAttributes({"access","user"})
 
 public class MyController {
     @Autowired
@@ -33,23 +37,32 @@ public class MyController {
     String index(ModelMap model, String page) {
         java.util.List<Post> posts = service.getPosts();
         model.addAttribute("posts", posts);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            System.out.println(userDetail);
+
+            model.addAttribute("username", userDetail.getUsername());
+            model.addAttribute("access", true);
+
+        }
 
         if (page != null)
             model.addAttribute("page", page);
         else model.addAttribute("page", 1);
-        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+        model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
         return "index2";
     }
+//
+//    @RequestMapping("/login")
+//    String logIn() {
+//        return "login";
+//    }
 
-    @RequestMapping("/login")
-    String logIn() {
-        return "logIn";
-    }
-
-    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/addPost" , method = RequestMethod.GET)
     String addPost(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images", imageService.getImages(request));
+        modelMap.addAttribute("images",imageService.getImages(request));
         return "index1";
     }
 
@@ -59,11 +72,14 @@ public class MyController {
     }
 
 
+
+
     @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images", imageService.getImages(request));
+        modelMap.addAttribute("images",imageService.getImages(request));
         return "gallery";
     }
+
 
 
 }

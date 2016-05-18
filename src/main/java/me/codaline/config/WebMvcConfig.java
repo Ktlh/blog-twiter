@@ -1,9 +1,9 @@
 package me.codaline.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -13,14 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import javax.servlet.MultipartConfigElement;
-
 @Configuration
-
 @EnableWebMvc
 @ComponentScan("me.codaline")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-
 
     @Bean
     public MultipartResolver multipartResolver() {
@@ -38,6 +34,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
         configurer.enable();
@@ -46,9 +43,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/admin/resources/**").addResourceLocations("/resources/");
 
 
-        registry.addResourceHandler("/ROOT/resources/**").addResourceLocations("/resources/images/");
+        //registry.addResourceHandler("/ROOT/resources/**").addResourceLocations("/resources/images/");
 
     }
 

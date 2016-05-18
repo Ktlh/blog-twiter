@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <!DOCTYPE HTML>
 <!--
 Striped by HTML5 UP
@@ -16,14 +15,13 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <!--[if lte IE 8]>
     <script src="../../css/ie/html5shiv.js"></script><![endif]-->
     <script src="../../resources/js/jquery.min.js"></script>
-    <script src="../../resources/js/skel.min.js"></script>
-    <script src="../../resources/js/skel-layers.min.js"></script>
-    <script src="../../resources/js/init.js"></script>
-    <script src="../../resources/js/main.js"></script>
+    <script src="resources/js/skel.min.js"></script>
+    <script src="resources/js/skel-layers.min.js"></script>
+    <script src="resources/js/init.js"></script>
 
-    <link rel="stylesheet" href="../../resources/css/skel.css"/>
-    <link rel="stylesheet" href="../../resources/css/style.css"/>
-    <link rel="stylesheet" href="../../resources/css/style-desktop.css"/>
+    <link rel="stylesheet" href="resources/css/skel.css"/>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="stylesheet" href="resources/css/style-desktop.css"/>
     <link rel="stylesheet" href="../../resources/css/style-wide.css"/>
 
     <!--[if lte IE 8]>
@@ -38,7 +36,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 <!-- Wrapper -->
 <div id="wrapper">
     <c:set var="ac" scope="session" value="${access}"/>
+    <c:if test="${page == null}">
 
+        <c:set var="page" scope="session" value="1"/>
+    </c:if>
     <!-- Content -->
     <div id="content">
         <div class="inner">
@@ -49,7 +50,6 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                     $('#image_container img').click(function () {
                         //remove border on any images that might be selected
                         $('#image_container img').removeClass("img_border")
-                        $('#NEWimage_container img').removeClass("img_border")
                         // set the img-source as value of image_from_list
                         $('#image_from_list').val($(this).attr("src"));
                         $('#data_value').val($(this).attr("id"));
@@ -60,40 +60,20 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                     });
 
                 })
-                function  SelectImg() {
-                    $('#NEWimage_container img').click(function () {
-
-                        //remove border on any images that might be selected
-                        $('#NEWimage_container img').removeClass("img_border")
-                        $('#image_container img').removeClass("img_border")
-                        // set the img-source as value of image_from_list
-                        $('#image_from_list').val($(this).attr("src"));
-                        $('#data_value').val($(this).attr("id"));
-                        // $('#data_value').val( $(this).data("options").color );
-
-                        //add border to a clicked image
-                        $(this).addClass("img_border")
-                });
-
-                }
             </script>
             <style>
                 .img_border {
                     border: 4px solid blue;
                 }
             </style>
-
             <form action="addPost" method="post">
                 <input type="text" name="title" placeholder="Title" required><br/>
                 <%--<input type="text" name="context" required>--%>
-                <textarea class="text-style1" rows="10" cols="70"
-                          STYLE="max-height: 300px; max-width: 100%; height: 60%" placeholder="Context" name="context"
-                          required></textarea>
+<textarea  class="text-style1" rows="10"  cols="70"  STYLE="max-height: 300px; max-width: 100%; height: 60%" placeholder="Context"  name="context" required></textarea>
                 <input id="image_from_list" name="image" type="hidden" value=""/><br/>
                 <input type="submit" name="add" value="add" align="right">
 
             </form>
-
             <div id="image_container">
 
                 <c:forEach items="${images}" var="name">
@@ -103,21 +83,22 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </c:forEach>
 
             </div>
-            <div id="NEWimage_container"></div>
-            <form:form id="forma" method="post" action="savefiles" target="frame_ajax"
+            <form:form method="post" action="savefiles"
                        modelAttribute="uploadForm" enctype="multipart/form-data">
 
                 <p>Select files to upload. .</p>
 
+                <table id="fileTable">
+                    <tr>
+                        <td><input name="files[0]" type="file" /></td>
+                    </tr>
 
-                <input id="File1" name="files[0]" type="file" onclick="Test()"/>
-                <br/>
+                </table>
+                <br />
+                <input type="submit" value="Upload" />
 
-                <%--<input type="submit" name="Up" value="Upload">--%>
-                <button class="button" name="Up" value="Upload" onclick="Upload()"></button>
             </form:form>
-            <iframe name="frame_ajax" src="savefiles" width="0" height="0" style="display:none">
-            </iframe>
+
         </div>
     </div>
 
@@ -143,7 +124,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="addPost">Add Post / Images</a></li>
+                    <li><a href="addPost">Add  Post / Images</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 

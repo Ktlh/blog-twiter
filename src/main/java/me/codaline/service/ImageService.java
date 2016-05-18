@@ -33,9 +33,9 @@ public class ImageService {
 
     public void saveImages(HttpServletRequest request, CrunchifyFileUpload uploadForm) throws IllegalStateException, IOException {
         ServletContext context = request.getSession().getServletContext();
-        String saveDirectory = context.getRealPath("") + File.separator + "resources\\images\\";
-     //   String saveDirectory = "E:\\blog\\v_mukha-springtemplate-051311f66d8a\\src\\main\\webapp\\resources\\images";
-        System.out.println(saveDirectory);
+       // String saveDirectory = context.getRealPath("") + File.separator + "resources\\images\\";
+        String saveDirectory = "E:\\blog\\v_mukha-springtemplate-051311f66d8a\\blog-twiter\\src\\main\\webapp\\resources\\images";
+
         List<MultipartFile> crunchifyFiles = uploadForm.getFiles();
 
         List<String> fileNames = new ArrayList<String>();
