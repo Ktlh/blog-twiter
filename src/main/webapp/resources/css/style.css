@@ -37,11 +37,27 @@
 		font-weight: 400;
 		color: #565656;
 	}
+a.button{
+	cursor: pointer;
+	background-color: #c94663;
+	background-image: url('images/bg01.png');
+	border-radius: 0.4em;
+	text-align: center;
+	box-shadow: inset 0px 0px 0px 1px rgba(255,255,255,0.15);
+	color: #fff;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 700;
+	text-decoration: none;
+	-moz-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+	-webkit-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+	-o-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+	-ms-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+	transition: background-color .25s ease-in-out, color .25s ease-in-out;
+	text-shadow: -1px -1px 0px rgba(0,0,0,0.5);
+}
 
-	a
-	{
-		color: #c94663;
-	}
+A, A:visited {COLOR: #03275f; TEXT-DECORATION: none;}
+A:hover {TEXT-DECORATION: underline;}
 
 	strong, b
 	{

@@ -43,16 +43,16 @@ public class PostController {
 
 
     @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
-        @ResponseBody
+    @ResponseBody
     String savefiles(
             @ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
-           // Model map,
+            // Model map,
             HttpServletRequest request) throws IllegalStateException, IOException, InterruptedException {
 
 
         imageService.saveImages(request, uploadForm);
         TimeUnit.SECONDS.sleep(1);
-       // map.addAttribute("images", imageService.getImages(request));
+        // map.addAttribute("images", imageService.getImages(request));
         String[] temp2 = imageService.getImages(request);
 
 //        return "<script language=\"JavaScript\">\n" +
@@ -72,17 +72,17 @@ public class PostController {
         return temp2[temp2.length - 1];
     }
 
-    @RequestMapping(value = "/addPost", method = RequestMethod.POST)
-    String createPost(ModelMap model, String title, String context, String date, String image, String page) {
-        service.createPost(title, context, date, image);
-        List<Post> posts = service.getPosts();
-        model.addAttribute("posts", posts);
-        if (page != null)
-            model.addAttribute("page", page);
-        else model.addAttribute("page", 1);
-        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-        return "index2";
-    }
+//    @RequestMapping(value = "/Update", method = RequestMethod.POST)
+//    String createPost(ModelMap model, String title, String context, String date, String image, String page) {
+//        service.createPost(title, context, date, image);
+//        List<Post> posts = service.getPosts();
+//        model.addAttribute("posts", posts);
+//        if (page != null)
+//            model.addAttribute("page", page);
+//        else model.addAttribute("page", 1);
+//        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+//        return "index2";
+//    }
 
 
     @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
@@ -97,15 +97,37 @@ public class PostController {
         return "index2";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    void test() {
+    @RequestMapping(value = "/Update", method = RequestMethod.GET)
+    String updatePost(ModelMap modelMap, HttpServletRequest request, int id) {
+        if (id != 0) {
+            Post post = service.getPost(id);
+            modelMap.addAttribute("post", post);
+        }
+        modelMap.addAttribute("images", imageService.getImages(request));
+        return "index1";
     }
 
     @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
-    String updatePost(ModelAndView model, int id, String title, String context, String date, String image, String page) {
-        Post post = service.update(id, title, context, date, image);
-        //   model.addObject("post", post);
+    String updatePost(ModelMap model, int ID, String title, String context, String date, String image, String page) {
+        if (ID != 0) {
+            service.update(ID, title, context, date, image);
+        } else {
+            service.createPost(title, context, date, image);
+        }
+
+        List<Post> posts = service.getPosts();
+        model.addAttribute("posts", posts);
+        if (page != null)
+            model.addAttribute("page", page);
+        else model.addAttribute("page", 1);
+        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
+    }
+    @RequestMapping(value = "material", method = RequestMethod.GET)
+    String singlePage(ModelMap model, int id){
+        Post post=service.getPost(id);
+        model.addAttribute("post",post);
+        return "singlePage";
     }
 
 

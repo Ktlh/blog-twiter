@@ -47,11 +47,7 @@ public class MyController {
         return "logIn";
     }
 
-    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
-    String addPost(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images", imageService.getImages(request));
-        return "index1";
-    }
+
 
     @RequestMapping("/registration")
     String registration() {

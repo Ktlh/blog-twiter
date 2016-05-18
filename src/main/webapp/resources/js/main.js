@@ -56,7 +56,7 @@ function DeletePost(id) {
         },
         function (data) {
             //var json = JSON.parse(data);
-            alert(data);
+
             window.location.reload();
             //  alert(data);
             //  $("#acontent").html(data);
@@ -80,4 +80,5 @@ function DeletePost(id) {
 //}
 function EditPost(id) {
 
+    $.get("Update?id="+id)
 }
