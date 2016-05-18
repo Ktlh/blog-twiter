@@ -60,9 +60,14 @@ public class MyController {
 //        return "login";
 //    }
 
-    @RequestMapping(value = "/admin/addPost" , method = RequestMethod.GET)
+    @RequestMapping("/login")
+    String logIn() {
+        return "logIn";
+    }
+
+    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
     String addPost(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images",imageService.getImages(request));
+        modelMap.addAttribute("images", imageService.getImages(request));
         return "index1";
     }
 

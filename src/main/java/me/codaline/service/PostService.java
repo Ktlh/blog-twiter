@@ -1,5 +1,6 @@
 package me.codaline.service;
 
+import javafx.geometry.Pos;
 import me.codaline.dao.PostDao;
 import me.codaline.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ public class PostService {
 
     public Post createPost(String title, String context,String date,String image) {
         Post post = new Post();
-
         post.setTitle(title);
         post.setContext(context);
         post.setDate(date);
@@ -30,7 +30,7 @@ public class PostService {
         dao.delete(post);
         return post;
     }
-    public  Post update (int id,String title, String context, String date , String image){
+    public  void update (int id,String title, String context, String date , String image){
         Post post = new Post();
         post.setTitle(title);
         post.setContext(context);
@@ -38,7 +38,8 @@ public class PostService {
         post.setId(id);
         post.setImage(image);
         dao.update(post);
-        return post;
+
     }
     public List<Post> getPosts(){return  dao.getPosts();}
+    public Post getPost(int id){return dao.getPost(id);}
 }

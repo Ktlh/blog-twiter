@@ -30,9 +30,13 @@ public class PostDao {
     }
 
     public List<Post> getPosts() {
-
-
-        return  sessionFactory.getCurrentSession().createCriteria(Post.class).addOrder(Property.forName("id").desc() ).list();
-
+        return sessionFactory.getCurrentSession().createCriteria(Post.class).addOrder(Property.forName("id").desc()).list();
+    }
+    public Post getPost(int id){
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Post.class);
+        criteria.add(Restrictions.eq("id", id));
+//        Query query = sessionFactory.getCurrentSession().createQuery("select from Users as u where u.email =:email");
+//        query.setParameter("email", email);
+        return (Post) criteria.uniqueResult();
     }
 }
