@@ -12,6 +12,7 @@ import me.codaline.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,7 +42,7 @@ public class PostController {
     @Autowired
     ImageService imageService;
 
-
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
     @ResponseBody
     String savefiles(
@@ -85,6 +86,7 @@ public class PostController {
 //    }
 
 
+    @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
     String deletePost(ModelMap model, int id, String page) {
         service.deletePost(id);
@@ -97,6 +99,7 @@ public class PostController {
         return "index2";
     }
 
+    @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/Update", method = RequestMethod.GET)
     String updatePost(ModelMap modelMap, HttpServletRequest request, int id) {
         if (id != 0) {
@@ -107,6 +110,7 @@ public class PostController {
         return "index1";
     }
 
+    @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
     String updatePost(ModelMap model, int ID, String title, String context, String date, String image, String page) {
         if (ID != 0) {

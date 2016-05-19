@@ -64,17 +64,21 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <p>${p.context}</p>
 
                 <a href="material?id=${p.id}" class="image featured"><img height="100%" width="100%" src="${p.image}" alt=""/></a>
-
                     <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
 
                 <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post</button>
                 <%--<button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})">Edit</button>--%>
                 <a style="color: white; float: right" class="button" id="EditButton" href="Update?id=${p.id}">Edit</a>
+
                 </c:if>
 
 
-                </c:forEach>
+
+            </c:forEach>
+                <input type="hidden" id="token" name="${_csrf.parameterName}"
+
+                       value="${_csrf.token}" />
                 <c:if test="${count == 0}">
                     <%--ф бага з infinity стр.--%>
                 <script>
@@ -296,7 +300,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <ul id="copyright">
             <li>&copy; Untitled.</li>
             <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            <li>Developed by : <br> <a href="https://vk.com/id86063569">Io</a> and <a href="https://vk.com/id183792251">Ktulhu</a> </li>        
+            <li>Developed by : <br> <a href="https://vk.com/id86063569">Io</a> and <a href="https://vk.com/id183792251">Ktulhu</a> </li>
         </ul>
 
     </div>

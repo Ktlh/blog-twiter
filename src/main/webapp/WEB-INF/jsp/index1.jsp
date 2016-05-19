@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE HTML>
 <!--
@@ -82,7 +83,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 }
             </style>
 
-            <form action="updatePost" method="post">
+            <form action="updatePost?${_csrf.parameterName}=${_csrf.token}" method="post">
                 <input type="text" name="title" placeholder="Title" required value="${post.title}"><br/>
                 <%--<input type="text" name="context" required>--%>
                 <textarea class="text-style1" rows="10" cols="70"
@@ -90,8 +91,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                           required>${post.context}</textarea>
                 <input id="image_from_list" name="image" type="hidden" value=""/><br/>
                 <input id="ID" name="ID" type="hidden" value="${post.id+0}"/><br/>
+                <%--<input type="hidden" th:th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>--%>
                 <input type="submit" name="add" value="Update" align="right">
-
+                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
             </form>
 
             <div id="image_container">
@@ -104,7 +106,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
             </div>
             <div id="NEWimage_container"></div>
-            <form:form id="forma" method="post" action="savefiles" target="frame_ajax"
+            <form:form id="forma" method="post" action="savefiles?${_csrf.parameterName}=${_csrf.token}" target="frame_ajax"
                        modelAttribute="uploadForm" enctype="multipart/form-data">
 
                 <p>Select files to upload. .</p>
@@ -112,9 +114,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                 <input id="File1" name="files[0]" type="file" onclick="Test()"/>
                 <br/>
+                <%--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>--%>
 
                 <%--<input type="submit" name="Up" value="Upload">--%>
                 <button class="button" name="Up" value="Upload" onclick="Upload()"></button>
+                <%--<input type="hidden" name="${_csrf.parameterName}"--%>
+                       <%--value="${_csrf.token}" />--%>
             </form:form>
 
         </div>

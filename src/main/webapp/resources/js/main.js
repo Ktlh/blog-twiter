@@ -47,12 +47,16 @@ function Upload() {
     )
 }
 function DeletePost(id) {
-    //var firstName = $("#firstName").val();
-    //var lastName = $("#lastName").val();
-    //var email = $("#email").val();
-    //var firstName = document.getElemtentById("fistname").value;
-    $.post("/deletePost", {
+//var firstName = $("#firstName").val();
+//var lastName = $("#lastName").val();
+//var email = $("#email").val();
+    var token =$("#token").val();
+
+
+    $.post("/deletePost?_csrf="+token, {
+
             id: id
+
         },
         function (data) {
             //var json = JSON.parse(data);
