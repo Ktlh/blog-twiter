@@ -2,16 +2,20 @@ package me.codaline.dao;
 
 
 import me.codaline.model.User;
+import me.codaline.model.UserRole;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Repository
+
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
@@ -44,6 +48,11 @@ public class UserDaoImpl implements UserDao {
 ////        Query query = sessionFactory.getCurrentSession().createQuery("select from User as u where u.email =:email");
 ////        query.setParameter("email", email);
       //  return (User) criteria.uniqueResult();
+	}
+
+	public void saveUser(User user,UserRole userRole){
+		sessionFactory.getCurrentSession().save(user);
+		sessionFactory.getCurrentSession().save(userRole);
 	}
 
 }

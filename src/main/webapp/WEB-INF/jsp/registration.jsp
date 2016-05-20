@@ -25,6 +25,8 @@
                 <p><input type="submit" value="Registration"></p>
                 <p> <a href="/"> BAck</a></p>
             </fieldset>
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}" />
         </form>
 
     </div>

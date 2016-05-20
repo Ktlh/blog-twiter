@@ -1,6 +1,7 @@
 package me.codaline.dao;
 
 import me.codaline.model.User;
+import me.codaline.model.UserRole;
 
 //import me.codaline.model.Post;
 //import me.codaline.model.User;
@@ -45,5 +46,6 @@ import me.codaline.model.User;
 public interface UserDao {
 
     User findByUserName(String username);
+    void saveUser(User user,UserRole userRole);
 
 }
