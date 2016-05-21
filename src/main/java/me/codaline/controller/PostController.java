@@ -7,12 +7,18 @@ import java.io.*;
 
 import me.codaline.model.CrunchifyFileUpload;
 import me.codaline.model.Post;
+import me.codaline.model.actions;
 import me.codaline.service.ImageService;
 import me.codaline.service.PostService;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -42,16 +48,25 @@ public class PostController {
     @Autowired
     ImageService imageService;
 
-    @Secured("ROLE_USER")
+
+    @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
     @ResponseBody
-    String savefiles(
-            @ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
-            // Model map,
-            HttpServletRequest request) throws IllegalStateException, IOException, InterruptedException {
+    String savefiles(@ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
+                     // Model map,
+                     HttpServletRequest request) throws IllegalStateException, IOException, InterruptedException {
 
-
+//        String date = new Date(System.currentTimeMillis()).toString();
         imageService.saveImages(request, uploadForm);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (!(auth instanceof AnonymousAuthenticationToken)) {
+//            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+//            List<MultipartFile> crunchifyFiles = uploadForm.getFiles();
+//            for (MultipartFile multipartFile : crunchifyFiles) {
+//                String fileName = multipartFile.getOriginalFilename();
+//                service.setAction(userDetail.getUsername(), "upload file with name:" +fileName, date);
+//            }
+//        }
         TimeUnit.SECONDS.sleep(1);
         // map.addAttribute("images", imageService.getImages(request));
         String[] temp2 = imageService.getImages(request);
@@ -89,13 +104,21 @@ public class PostController {
     @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
     String deletePost(ModelMap model, int id, String page) {
-        service.deletePost(id);
-        List<Post> posts = service.getPosts();
-        model.addAttribute("posts", posts);
-        if (page != null)
-            model.addAttribute("page", page);
-        else model.addAttribute("page", 1);
-        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+        String date = new Date(System.currentTimeMillis()).toString();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            service.deletePost(id);
+            service.setAction(userDetail.getUsername(), "delete post with id:" + id, date);
+            List<Post> posts = service.getPosts();
+            model.addAttribute("posts", posts);
+            if (page != null)
+                model.addAttribute("page", page);
+            else model.addAttribute("page", 1);
+            model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+//        new Date(System.currentTimeMillis());
+            return "index2";
+        }
         return "index2";
     }
 
@@ -112,25 +135,39 @@ public class PostController {
 
     @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
-    String updatePost(ModelMap model, int ID, String title, String context, String date, String image, String page) {
-        if (ID != 0) {
-            service.update(ID, title, context, date, image);
-        } else {
-            service.createPost(title, context, date, image);
-        }
+    ModelAndView updatePost(int ID, String title, String context, String image) {
+        String date = new Date(System.currentTimeMillis()).toString();
+//        try {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            if (ID != 0) {
+                service.update(ID, title, date, context, image);
+                service.setAction(userDetail.getUsername(), "modify post with id:" + ID, date);
+            } else {
+                service.createPost(title, context, date, image);
+                service.setAction(userDetail.getUsername(), "add new post", date);
+            }
 
-        List<Post> posts = service.getPosts();
-        model.addAttribute("posts", posts);
-        if (page != null)
-            model.addAttribute("page", page);
-        else model.addAttribute("page", 1);
-        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-        return "index2";
+        }
+//        }catch (Exception e){
+//            System.out.println(e.toString());
+//        }
+
+
+        return new ModelAndView("redirect:/");
     }
+
     @RequestMapping(value = "material", method = RequestMethod.GET)
-    String singlePage(ModelMap model, int id){
-        Post post=service.getPost(id);
-        model.addAttribute("post",post);
+    String singlePage(ModelMap model, int id) {
+        Post post = service.getPost(id);
+        model.addAttribute("post", post);
         return "singlePage";
+    }
+    @RequestMapping(value = "actions",method = RequestMethod.GET)
+    String act(ModelMap model){
+        List<actions> actionses=service.getActions();
+        model.addAttribute("actions",actionses);
+        return "actionsList";
     }
 }

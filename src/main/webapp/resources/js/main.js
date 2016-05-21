@@ -12,27 +12,32 @@
 //    )
 //    event.preventDefault();
 //});
-
+function test() {
+    alert("");
+}
 function Upload() {
+    alert("vhod");
     var $form = $(this);
     var File1 = document.getElementById("File1");
     var tip= File1.value.toString();
-
-
+    
+    
     var tipstr1 = tip;
     var from1=tipstr1.search('fakepath');
     var to1= tipstr1.length;
     var tipstr2=tipstr1.substring(from1,to1);
-
-
+    
+    
     var strstr1 = tipstr2;
     var from2=9;
     var to2= strstr1.length;
-    var strstr2=strstr1.substring(from2,to2);//DO NOT OPEN!!!
-    $.post("/savefiles",
+    var strstr2=strstr1.substring(from2,to2);
+    var token =$("#token").val();//DO NOT OPEN!!!
+    $.post("/savefiles?_csrf="+token,
         $form.serialize()
         ,
         function (data) {
+            alert("obrobka");
             //alert(data + "1");
             //var str = data;
             //var from=str.search('resources');
@@ -40,7 +45,7 @@ function Upload() {
             //var str2=str.substring(from,to);
             //alert(str2 + "2");
             $("#NEWimage_container")
-
+    
                 .append('<img style="margin: 10px" width="100px" height="100px" src="\\resources\\images\\'+strstr2+'"/>')
             SelectImg()
         }

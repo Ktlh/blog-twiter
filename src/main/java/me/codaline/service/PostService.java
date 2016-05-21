@@ -1,8 +1,10 @@
 package me.codaline.service;
 
 import javafx.geometry.Pos;
+import me.codaline.dao.ActionDao;
 import me.codaline.dao.PostDao;
 import me.codaline.model.Post;
+import me.codaline.model.actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 public class PostService {
     @Autowired
     PostDao dao;
+    @Autowired
+    ActionDao actionDao;
 
     public Post createPost(String title, String context,String date,String image) {
         Post post = new Post();
@@ -30,7 +34,8 @@ public class PostService {
         dao.delete(post);
         return post;
     }
-    public  void update (int id,String title, String context, String date , String image){
+
+    public  void update (int id,String title,String date, String context,  String image){
         Post post = new Post();
         post.setTitle(title);
         post.setContext(context);
@@ -42,4 +47,15 @@ public class PostService {
     }
     public List<Post> getPosts(){return  dao.getPosts();}
     public Post getPost(int id){return dao.getPost(id);}
+
+    public void setAction(String user,String action, String date){
+        actions actionns=new actions();
+        actionns.setUser(user);
+        actionns.setAction(action);
+        actionns.setDate(date);
+        actionDao.setAction(actionns);
+    }
+    public List<actions> getActions(){
+        return actionDao.getActions();
+    }
 }
