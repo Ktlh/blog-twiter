@@ -1,6 +1,7 @@
 package me.codaline.controller;
 
 import me.codaline.model.Post;
+import me.codaline.model.User;
 import me.codaline.service.ImageService;
 import me.codaline.service.PostService;
 import me.codaline.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +28,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
-@SessionAttributes({"access","user"})
+@SessionAttributes({"access", "user"})
 
 public class MyController {
     @Autowired
@@ -38,8 +40,7 @@ public class MyController {
 
     @RequestMapping("/")
     String index(ModelMap model, String page) {
-        java.util.List<Post> posts = service.getPosts();
-        model.addAttribute("posts", posts);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
@@ -50,11 +51,12 @@ public class MyController {
             model.addAttribute("access", true);
 
         }
-
+        java.util.List<Post> posts = service.getPosts();
+        model.addAttribute("posts", posts);
         if (page != null)
             model.addAttribute("page", page);
         else model.addAttribute("page", 1);
-        model.addAttribute("pages",( posts.size() / 2 )+ posts.size() % 2);
+        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
     }
 //
@@ -62,6 +64,36 @@ public class MyController {
 //    String logIn() {
 //        return "login";
 //    }
+@RequestMapping(value = "userList",method = RequestMethod.GET)
+String uList(ModelMap model){
+    java.util.List<User> users=userService.getUsers();
+    model.addAttribute("users",users);
+    return "userList";
+}
+    @RequestMapping(value = "changeAccesss",method = RequestMethod.POST)
+    void ban(String username,boolean status){
+userService.setAccess(username,status);
+    }
+//    @RequestMapping(value = "unban",method = RequestMethod.POST)
+//    void unban(String username,boolean status){
+//        userService.setAccess(username,status);
+//    }
+    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
+    String saveUser(
+            ModelMap modelMap,
+            String firstName,
+            String lastName,
+            String email,
+            String pass
+    ) {
+        userService.createUser(firstName, lastName, email, pass);
+
+        java.util.List<Post> posts = service.getPosts();
+        modelMap.addAttribute("posts", posts);
+        modelMap.addAttribute("page", 1);
+        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+        return "index2";
+    }
 
     @RequestMapping("/login")
     String logIn() {
@@ -80,14 +112,11 @@ public class MyController {
     }
 
 
-
-
     @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images",imageService.getImages(request));
+        modelMap.addAttribute("images", imageService.getImages(request));
         return "gallery";
     }
-
 
 
 }

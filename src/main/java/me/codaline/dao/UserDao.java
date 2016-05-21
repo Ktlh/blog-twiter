@@ -3,6 +3,8 @@ package me.codaline.dao;
 import me.codaline.model.User;
 import me.codaline.model.UserRole;
 
+import java.util.List;
+
 //import me.codaline.model.Post;
 //import me.codaline.model.User;
 //import org.hibernate.Criteria;
@@ -47,5 +49,7 @@ public interface UserDao {
 
     User findByUserName(String username);
     void saveUser(User user,UserRole userRole);
+    List<User> getUsers();
+    void setAccess(String username,boolean status);
 
 }

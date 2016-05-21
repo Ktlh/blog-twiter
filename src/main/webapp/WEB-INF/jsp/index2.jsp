@@ -55,6 +55,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <header>
                     Number of post - ${p.id}
                     <span style="float: right">Last modified at ${p.date}</span>
+
                     <!--
                         Note: Titles and subtitles will wrap automatically when necessary, so don't worry
                         if they get too long. You can also remove the <p> entirely if you don't
