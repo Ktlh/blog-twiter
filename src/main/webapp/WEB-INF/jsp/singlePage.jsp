@@ -29,6 +29,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="resources/css/ie/v8.css"/><![endif]-->
 </head>
+<c:if test="${post.id==null}">
+<script>Redirect();</script>
+</c:if>
 <!--
     Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
     Set it to "right-sidebar" to, you guessed it, position it on the right.
@@ -44,8 +47,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <div class="inner">
             <script language="javascript" type="text/javascript"
                     src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-            Number of post - ${post.id}
-           <a> <p style="font-family: 'FontAwesome', sans-serif;font-size: 50pt">${post.title}</p></a>
+           <p> Number of post - ${post.id}</p>
+           <a> <p style="font-family: 'Verdana', sans-serif;font-size: 45pt">${post.title}</p></a>
             <hr>
 
                 <p style=" font-size: 20pt; text-align: justify "> <img style="float: left;  margin: 7px 7px 7px 0;" height="50%" width="50%" src="${post.image}" alt=""/>

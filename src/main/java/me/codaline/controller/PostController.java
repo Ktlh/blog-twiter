@@ -53,53 +53,12 @@ public class PostController {
     @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
     @ResponseBody
     String savefiles(@ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
-                     // Model map,
                      HttpServletRequest request) throws IllegalStateException, IOException, InterruptedException {
-
-//        String date = new Date(System.currentTimeMillis()).toString();
         imageService.saveImages(request, uploadForm);
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (!(auth instanceof AnonymousAuthenticationToken)) {
-//            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//            List<MultipartFile> crunchifyFiles = uploadForm.getFiles();
-//            for (MultipartFile multipartFile : crunchifyFiles) {
-//                String fileName = multipartFile.getOriginalFilename();
-//                service.setAction(userDetail.getUsername(), "upload file with name:" +fileName, date);
-//            }
-//        }
         TimeUnit.SECONDS.sleep(1);
-        // map.addAttribute("images", imageService.getImages(request));
         String[] temp2 = imageService.getImages(request);
-
-//        return "<script language=\"JavaScript\">\n" +
-//                "<!--\n" +
-//                " alert(\"\");" +
-//                "//-->\n" +
-//                "</script>";
-//        return "<script language=\"JavaScript\">\n" +
-//                "<!--\n" +
-//                "#(\"#image_container\";\n" +
-////                "alert(" + temp[temp.length - 1] + ")\n"+
-//                ".append( '<img style=\"margin: 10px\" width=\"100px\" height=\"100px\" src=\"<c:url value=" + temp[temp.length - 1] + "/> \"/>' )\n" +
-//                "$(\"#image_container\").html(data);\n"+
-//                "//-->\n" +
-//                "</script>";
-//return "index1";
         return temp2[temp2.length - 1];
     }
-
-//    @RequestMapping(value = "/Update", method = RequestMethod.POST)
-//    String createPost(ModelMap model, String title, String context, String date, String image, String page) {
-//        service.createPost(title, context, date, image);
-//        List<Post> posts = service.getPosts();
-//        model.addAttribute("posts", posts);
-//        if (page != null)
-//            model.addAttribute("page", page);
-//        else model.addAttribute("page", 1);
-//        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-//        return "index2";
-//    }
-
 
     @Secured("hasRole('ROLE_USER')")
     @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
@@ -109,14 +68,13 @@ public class PostController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             service.deletePost(id);
-            service.setAction(userDetail.getUsername(), "delete post with id:" + id, date);
+            service.setAction(userDetail.getUsername(), "delete post with id:" + id,null, date);
             List<Post> posts = service.getPosts();
             model.addAttribute("posts", posts);
             if (page != null)
                 model.addAttribute("page", page);
             else model.addAttribute("page", 1);
             model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-//        new Date(System.currentTimeMillis());
             return "index2";
         }
         return "index2";
@@ -143,10 +101,10 @@ public class PostController {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             if (ID != 0) {
                 service.update(ID, title, date, context, image);
-                service.setAction(userDetail.getUsername(), "modify post with id:" + ID, date);
+                service.setAction(userDetail.getUsername(),"modified ", "http://localhost:8080/material?id="+ ID, date);
             } else {
-                service.createPost(title, context, date, image);
-                service.setAction(userDetail.getUsername(), "add new post", date);
+                Post post=service.createPost(title, context, date, image);
+                service.setAction(userDetail.getUsername(), "add new ","http://localhost:8080/material?id="+post.getId(), date);
             }
 
         }

@@ -12,6 +12,16 @@ public class actions {
     String user;
     String action;
     String date;
+    String href;
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
     public int getId() {
         return id;
     }

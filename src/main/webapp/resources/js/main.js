@@ -12,6 +12,9 @@
 //    )
 //    event.preventDefault();
 //});
+function Redirect() {
+    window.location.href="http://localhost:8080/404";
+}
 function Ban(name,idi) {
     var token = $("#token").val();
     document.getElementById(idi).innerHTML='Baned;';

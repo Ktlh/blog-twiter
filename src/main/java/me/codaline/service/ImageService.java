@@ -56,7 +56,7 @@ public class ImageService {
                 for (MultipartFile multipartFile : crunchifyFiles) {
 
                     String fileName = multipartFile.getOriginalFilename();
-                    service.setAction(userDetail.getUsername(), "upload file with name:" +fileName, date);
+                    service.setAction(userDetail.getUsername(), "upload file with name:" +fileName,null, date);
                     if (!"".equalsIgnoreCase(fileName)) {
                         // Handle file content - multipartFile.getInputStream()
                         multipartFile

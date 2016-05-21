@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,6 +104,10 @@ public class MainController {
 		model.setViewName("403");
 		return model;
 
+	}
+	@RequestMapping(value = "/404", method = RequestMethod.GET)
+	String pageNotFound(ModelMap modelMap){
+		return "404";
 	}
 
 }

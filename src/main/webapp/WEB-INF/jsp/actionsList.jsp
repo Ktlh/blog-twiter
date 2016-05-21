@@ -44,10 +44,17 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <div class="inner">
       <script language="javascript" type="text/javascript"
               src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-      <p style="">Users actions list</p>
+      <h2 style="font-size: 30pt">Actions list</h2>
       <hr>
 <c:forEach var="action" items="${actions}">
-<p>User with name ${action.user} ${action.action} at ${action.date}</p>
+  <span style="font-size: 20pt; font-family: 'Open Sans Condensed', sans-serif;font-weight: 200; display: block; margin-top: 3em;color: #999;">
+
+<p>User with name ${action.user} ${action.action}<c:if test="${action.href!=null}">
+  <a href="${action.href}">post</a>
+  </c:if>
+   at ${action.date}</p>
+      </span>
+  <hr>
 </c:forEach>
     </div>
   </div>

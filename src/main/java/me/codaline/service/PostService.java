@@ -48,11 +48,12 @@ public class PostService {
     public List<Post> getPosts(){return  dao.getPosts();}
     public Post getPost(int id){return dao.getPost(id);}
 
-    public void setAction(String user,String action, String date){
+    public void setAction(String user,String action,String href, String date){
         actions actionns=new actions();
         actionns.setUser(user);
         actionns.setAction(action);
         actionns.setDate(date);
+        actionns.setHref(href);
         actionDao.setAction(actionns);
     }
     public List<actions> getActions(){
