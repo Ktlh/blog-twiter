@@ -16,7 +16,7 @@ function test() {
     alert("");
 }
 function Upload() {
-    alert("vhod");
+    //alert("vhod");
     var $form = $(this);
     var File1 = document.getElementById("File1");
     var tip= File1.value.toString();
@@ -37,7 +37,7 @@ function Upload() {
         $form.serialize()
         ,
         function (data) {
-            alert("obrobka");
+            //alert("obrobka");
             //alert(data + "1");
             //var str = data;
             //var from=str.search('resources');
