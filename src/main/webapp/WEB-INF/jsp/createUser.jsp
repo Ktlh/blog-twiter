@@ -5,7 +5,7 @@
   <script src="/resources/js/main.js"></script>
 </head>
 <body>
-  <%--<form action="/createUser" method="post">--%>
+  <%--<form actions="/createUser" method="post">--%>
     <%--&lt;%&ndash;<input type="text" name="fName"><br>&ndash;%&gt;--%>
     <%--<input type="text" name="lName"><br>--%>
     <%--<input type="text" name="e">--%>

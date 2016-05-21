@@ -20,6 +20,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <script src="resources/js/skel.min.js"></script>
     <script src="resources/js/skel-layers.min.js"></script>
     <script src="resources/js/init.js"></script>
+    <script src="../../resources/js/main.js"></script>
 
     <link rel="stylesheet" href="resources/css/skel.css"/>
     <link rel="stylesheet" href="resources/css/style.css"/>
@@ -45,6 +46,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
             <script language="javascript" type="text/javascript"
                     src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
             <script type="text/javascript">
+
                 $(document).ready(function () {
                     $('#image_container img').click(function () {
                         //remove border on any images that might be selected
@@ -105,23 +107,27 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </c:forEach>
 
             </div>
+
             <div id="NEWimage_container"></div>
-            <form:form id="forma" method="post" action="savefiles?${_csrf.parameterName}=${_csrf.token}" target="frame_ajax"
-                       modelAttribute="uploadForm" enctype="multipart/form-data">
+            <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <form:form id="forma"  modelAttribute="uploadForm" target="frame_ajax" action="savefiles?${_csrf.parameterName}=${_csrf.token}"
+                       enctype="multipart/form-data">
 
                 <p>Select files to upload. .</p>
 
 
-                <input id="File1" name="files[0]" type="file" onclick="Test()"/>
+                <input id="File1" name="files[0]" type="file"/>
                 <br/>
                 <%--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>--%>
 
                 <%--<input type="submit" name="Up" value="Upload">--%>
-                <button class="button" name="Up" value="Upload" onclick="Upload()"></button>
+
                 <%--<input type="hidden" name="${_csrf.parameterName}"--%>
                        <%--value="${_csrf.token}" />--%>
+                <button class="button" name="Up" value="Upload" onclick="Upload()"></button>
             </form:form>
-
+            <iframe name="frame_ajax" src="savefiles?${_csrf.parameterName}=${_csrf.token}" width="0" height="0" style="display:none">
+                            </iframe>
         </div>
     </div>
 

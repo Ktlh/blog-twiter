@@ -45,9 +45,7 @@ public class MyController {
 
             model.addAttribute("username", userDetail.getUsername());
             model.addAttribute("access", true);
-
         }
-
         if (page != null)
             model.addAttribute("page", page);
         else model.addAttribute("page", 1);
