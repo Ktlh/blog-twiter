@@ -3,6 +3,7 @@ package me.codaline.controller;
 import me.codaline.model.Post;
 import me.codaline.service.ImageService;
 import me.codaline.service.PostService;
+import me.codaline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -32,6 +33,8 @@ public class MyController {
     PostService service;
     @Autowired
     ImageService imageService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/")
     String index(ModelMap model, String page) {
