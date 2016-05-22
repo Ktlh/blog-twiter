@@ -78,22 +78,7 @@ userService.setAccess(username,status);
 //    void unban(String username,boolean status){
 //        userService.setAccess(username,status);
 //    }
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    String saveUser(
-            ModelMap modelMap,
-            String firstName,
-            String lastName,
-            String email,
-            String pass
-    ) {
-        userService.createUser(firstName, lastName, email, pass);
 
-        java.util.List<Post> posts = service.getPosts();
-        modelMap.addAttribute("posts", posts);
-        modelMap.addAttribute("page", 1);
-        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-        return "index2";
-    }
 
     @RequestMapping("/login")
     String logIn() {
@@ -135,8 +120,7 @@ userService.setAccess(username,status);
         userService.createUser(userName, pass, email, firstName);
 
         emailService.send(email, userName);
-
-        List<Post> posts = postService.getPosts();
+        java.util.List<Post> posts = postService.getPosts();
         modelMap.addAttribute("posts", posts);
         modelMap.addAttribute("page", 1);
         modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);

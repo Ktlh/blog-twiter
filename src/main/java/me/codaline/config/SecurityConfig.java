@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable();
+
 	http.authorizeRequests().antMatchers("/admin/**")
 	.access("hasRole('ROLE_ADMIN')").and().formLogin()
 	.loginPage("/login").failureUrl("/login?error")
@@ -36,9 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	.passwordParameter("password")
 	.and().logout().logoutSuccessUrl("/login?logout")
 	.and().csrf()
-	.and().exceptionHandling().accessDeniedPage("/403");
+	.and().exceptionHandling().accessDeniedPage("/403").and().headers().frameOptions().disable();
 
-
+//
+//		http.headers().frameOptions().disable();
 
 
 	}
