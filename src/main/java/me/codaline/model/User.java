@@ -1,61 +1,4 @@
 package me.codaline.model;
-//
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
-//
-//@Entity
-//public class User {
-//
-//    @Id
-//    @GeneratedValue
-//    int id;
-//    String firstName;
-//    String lastName;
-//    String email;
-//    String pass;
-//
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public String getPass() {
-//        return pass;
-//    }
-//
-//    public void setEmail(String email) {
-//
-//        this.email = email;
-//    }
-//
-//    public void setPass(String pass) {
-//        this.pass = pass;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public void setFirstName(String firstName) {
-//        this.firstName = firstName;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-//
-//    public void setLastName(String lastName) {
-//        this.lastName = lastName;
-//    }
-//}
 
 
 import java.util.HashSet;
@@ -75,28 +18,45 @@ public class User {
     private String username;
     private String password;
     private boolean enabled;
+    private String email;
+    private String firstName;
+
+
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
     public User() {
     }
 
-    public User(String username, String password, boolean enabled) {
+    public User(String username, String password, boolean enabled, String email, String firstName) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+        this.email = email;
+        this.firstName = firstName;
     }
 
-    public User(String username, String password, boolean enabled, Set<UserRole> userRole) {
+    public User(String username, String password, boolean enabled, Set<UserRole> userRole, String email, String firstName) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.userRole = userRole;
+        this.email = email;
+        this.firstName = firstName;
     }
 
     @Id
     @Column(name = "username", unique = true, nullable = false, length = 45)
     public String getUsername() {
         return this.username;
+    }
+
+    @Column(name = "firstName", nullable = false, length = 60)
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setUsername(String username) {
@@ -130,4 +90,12 @@ public class User {
         this.userRole = userRole;
     }
 
+    @Column(name = "email", nullable = false, length = 60)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

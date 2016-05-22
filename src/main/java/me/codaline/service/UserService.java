@@ -19,11 +19,13 @@ public class UserService {
     @Autowired
     UserDaoImpl dao;
 
-    public void createUser(String userName, String lastName, String email, String pass) {
+    public void createUser(String userName, String pass,String email ,String firstName) {
         User user = new User();
         user.setEnabled(false);
         user.setPassword(pass);
         user.setUsername(userName);
+        user.setEmail(email);
+        user.setFirstName(firstName);
         UserRole userRole= new UserRole();
         userRole.setRole("USER_ROLE");
         userRole.setUser(user);
@@ -36,9 +38,9 @@ public class UserService {
 //        return dao.getUsers();
 //    }
 
-//    public User getUser(String email, String pass) {
-//        return dao.getUser(email, pass);
-//    }
+    public User getUser(String userName) {
+        return dao.findByUserName(userName);
+    }
 
 
 }
