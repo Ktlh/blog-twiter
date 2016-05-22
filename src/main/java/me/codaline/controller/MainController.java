@@ -18,16 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MainController {
 
-//	@RequestMapping(value = {  "/welcome**" }, method = RequestMethod.GET)
-//	public ModelAndView defaultPage() {
-//
-//		ModelAndView model = new ModelAndView();
-//		model.addObject("title", "Spring Security + Hibernate Example");
-//		model.addObject("message", "This is default page!");
-//		model.setViewName("hello");
-//		return model;
-//
-//	}
+
 
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
@@ -55,15 +46,7 @@ public class MainController {
 		}
 		model.setViewName("login");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if ((auth instanceof AnonymousAuthenticationToken)) {
-//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//			System.out.println(userDetail);
-//
-//
-//			model.addObject("username", userDetail.getUsername());
-//
-//			model.addObject("access", true);
-//		}
+
 		return model;
 
 	}
@@ -95,7 +78,7 @@ public class MainController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
+
 
 			model.addObject("username", userDetail.getUsername());
 

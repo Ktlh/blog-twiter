@@ -2,8 +2,8 @@
 //
 //import me.codaline.model.Post;
 //import me.codaline.model.User;
-//import me.codaline.service.PostService;
-//import me.codaline.service.UserService;
+//import me.codaline.postService.PostService;
+//import me.codaline.postService.UserService;
 //import org.json.JSONException;
 //import org.json.JSONObject;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@
 //public class UserController {
 //
 //    @Autowired
-//    UserService service;
+//    UserService postService;
 //    @Autowired
 //    PostService PostService;
 //
@@ -35,7 +35,7 @@
 ////                    String email
 ////            ) {
 ////        ModelAndView modelAndView = new ModelAndView("success");
-////        User user = service.createUser(firstName, lastName, email);
+////        User user = postService.createUser(firstName, lastName, email);
 ////        modelAndView.addObject("user", user);
 ////        return modelAndView;
 ////    }
@@ -48,7 +48,7 @@
 //            String email,
 //            String pass
 //    ) {
-//        User user = service.createUser(firstName, lastName, email, pass);
+//        User user = postService.createUser(firstName, lastName, email, pass);
 //        modelMap.addAttribute("user", user);
 //        List<Post> posts = PostService.getPosts();
 //        modelMap.addAttribute("posts", posts);
@@ -60,15 +60,15 @@
 //
 //    @RequestMapping(value = "/users", method = RequestMethod.GET)
 //    String getUsers(ModelMap modelMap) {
-//        List<User> users = service.getUsers();
+//        List<User> users = postService.getUsers();
 //        modelMap.addAttribute("users", users);
 //        return "users";
 //    }
 //
 //    @RequestMapping(value = "/user", method = RequestMethod.POST)
 //    String getUser(ModelMap modelMap, String email, String pass) throws JSONException {
-////        User user = service.getUser(email, pass);
-//        User user = service.getUser(email, pass);
+////        User user = postService.getUser(email, pass);
+//        User user = postService.getUser(email, pass);
 //
 //        try {
 //
