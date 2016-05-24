@@ -68,7 +68,7 @@ public class PostController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             service.deletePost(id);
-            service.setAction(userDetail.getUsername(), "delete post with id:" + id,null, date);
+            service.setAction(userDetail.getUsername(), "delete post with id:" + id, null, date);
             List<Post> posts = service.getPosts();
             model.addAttribute("posts", posts);
             if (page != null)
@@ -101,10 +101,10 @@ public class PostController {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             if (ID != 0) {
                 service.update(ID, title, date, context, image);
-                service.setAction(userDetail.getUsername(),"modified ", "http://localhost:8080/material?id="+ ID, date);
+                service.setAction(userDetail.getUsername(), "modified ", "http://localhost:8080/material?id=" + ID, date);
             } else {
-                Post post=service.createPost(title, context, date, image);
-                service.setAction(userDetail.getUsername(), "add new ","http://localhost:8080/material?id="+post.getId(), date);
+                Post post = service.createPost(title, context, date, image);
+                service.setAction(userDetail.getUsername(), "add new ", "http://localhost:8080/material?id=" + post.getId(), date);
             }
 
         }
@@ -122,10 +122,11 @@ public class PostController {
         model.addAttribute("post", post);
         return "singlePage";
     }
-    @RequestMapping(value = "actions",method = RequestMethod.GET)
-    String act(ModelMap model){
-        List<actions> actionses=service.getActions();
-        model.addAttribute("actions",actionses);
+
+    @RequestMapping(value = "actions", method = RequestMethod.GET)
+    String act(ModelMap model) {
+        List<actions> actionses = service.getActions();
+        model.addAttribute("actions", actionses);
         return "actionsList";
     }
 }

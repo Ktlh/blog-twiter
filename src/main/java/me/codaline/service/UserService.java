@@ -1,7 +1,9 @@
 package me.codaline.service;
 
+import me.codaline.dao.ActivityDao;
 import me.codaline.dao.UserDao;
 import me.codaline.dao.UserDaoImpl;
+import me.codaline.model.Activity;
 import me.codaline.model.User;
 import me.codaline.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +21,43 @@ public class UserService {
 
     @Autowired
     UserDaoImpl dao;
+    @Autowired
+    ActivityDao activityDao;
 
-    public void createUser(String userName, String pass,String email ,String firstName) {
+    public void createUser(String userName, String pass, String email, String firstName) {
         User user = new User();
         user.setEnabled(false);
         user.setPassword(pass);
         user.setUsername(userName);
         user.setEmail(email);
         user.setFirstName(firstName);
-        UserRole userRole= new UserRole();
+        UserRole userRole = new UserRole();
         userRole.setRole("USER_ROLE");
         userRole.setUser(user);
-        dao.saveUser(user,userRole);
-
-
+        dao.saveUser(user, userRole);
+        Activity activity = new Activity();
+        activity.setLogin(userName);
+        activityDao.save(activity);
     }
+
+    public List<Activity> getActivities(){
+        return activityDao.getAll();
+    }
+    public void upActivity(String username){
+        activityDao.upCount(username);
+    }
+    public void cleanActivities(){
+        activityDao.clean();
+    }
+
 
     public List<User> getUsers() {
         return dao.getUsers();
     }
-    public void setAccess(String username, boolean status){
-        dao.setAccess(username,status);
+
+    public void setAccess(String username, boolean status) {
+        dao.setAccess(username, status);
     }
-//    public User getUser(String email, String pass) {
-//        return dao.getUser(email, pass);
-//    }
-//    public List<User> getUsers() {
-//        return dao.getUsers();
-//    }
 
     public User getUser(String userName) {
         return dao.findByUserName(userName);

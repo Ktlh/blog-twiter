@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE HTML>
 <!--
 Striped by HTML5 UP
@@ -7,7 +9,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 -->
 <html>
 <head>
-    <title>Blog-twiter</title>
+    <title>Blog</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -18,14 +20,22 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <script src="../../resources/js/skel-layers.min.js"></script>
     <script src="../../resources/js/init.js"></script>
     <script src="../../resources/js/main.js"></script>
+    <script src="../../resources/js/chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <link rel="stylesheet" href="../../resources/css/skel.css"/>
     <link rel="stylesheet" href="../../resources/css/style.css"/>
     <link rel="stylesheet" href="../../resources/css/style-desktop.css"/>
     <link rel="stylesheet" href="../../resources/css/style-wide.css"/>
+    <link rel="stylesheet" href="../../resources/css/modal.css"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="../../resources/css/ie/v8.css"/><![endif]-->
+    <link rel="stylesheet" href="resources/css/ie/v8.css"/><![endif]-->
+    <script>
+$(document).ready(function () {
+    loading();
+})
+    </script>
 </head>
 <!--
     Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
@@ -36,131 +46,19 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 <!-- Wrapper -->
 <div id="wrapper">
     <c:set var="ac" scope="session" value="${access}"/>
-    <c:if test="${page == null}">
 
-        <c:set var="page" scope="session" value="1"/>
-    </c:if>
     <!-- Content -->
     <div id="content">
         <div class="inner">
+            <script language="javascript" type="text/javascript"
+                    src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+            <h2 style="font-size: 30pt">Users attendance</h2>
+            <hr>
+            <div id="top_x_div" style="width: 900px; height: 500px;"></div>
+            <a id="go" class="button">Reset stat!</a>
+            <input type="hidden" id="token" name="${_csrf.parameterName}"
 
-            <!-- Post -->
-            <c:set var="count" scope="session" value="0"/>
-            <c:forEach begin="${(page*2)-2}" end="${(page*2)-1}" var="p" items="${posts}">
-
-
-            <article class="box post post-excerpt">
-
-                <header>
-                    Number of post - ${p.id}
-                    <span style="float: right">Last modified at ${p.date}</span>
-
-                    <!--
-                        Note: Titles and subtitles will wrap automatically when necessary, so don't worry
-                        if they get too long. You can also remove the <p> entirely if you don't
-                        need a subtitle.
-                    -->
-                    <h2><a href="material?id=${p.id}">${p.title}</a></h2>
-                </header>
-                <p>${p.context}</p>
-
-                <a href="material?id=${p.id}" class="image featured"><img height="100%" width="100%" src="${p.image}"
-                                                                          alt=""/></a>
-                    <c:set var="count" scope="session" value="1"/>
-                <c:if test="${ac == true}">
-
-                <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post
-                </button>
-                    <%--<button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})">Edit</button>--%>
-                <a style="color: white; float: right" class="button" id="EditButton" href="Update?id=${p.id}">Edit</a>
-
-                </c:if>
-
-
-                </c:forEach>
-                <input type="hidden" id="token" name="${_csrf.parameterName}"
-
-                       value="${_csrf.token}"/>
-                <c:if test="${count == 0}">
-                    <%--ф бага з infinity стр.--%>
-                <script>
-                    var pages =${pages};
-
-                    window.location.assign("http://localhost:8080/?page=" + pages);
-                </script>
-                </c:if>
-                <c:if test="${ac == true}">
-
-
-                </c:if>
-
-
-                <!-- Pagination -->
-                <div class="pagination">
-                    <!--<a href="#" class="button previous">Previous Page</a>-->
-
-                    <div class="pages">
-
-                        <c:choose>
-                            <c:when test="${page>3}">
-                                <a href="/?page=${page-3}">${page-3}</a>
-                                <a href="/?page=${page-2}">${page-2}</a>
-                                <a href="/?page=${page-1}">${page-1}</a>
-                            </c:when>
-                            <c:when test="${page>2}">
-                                <a href="/?page=${page-2}">${page-2}</a>
-                                <a href="/?page=${page-1}">${page-1}</a>
-                            </c:when>
-                            <c:when test="${page>1}">
-                                <a href="/?page=${page-1}">${page-1}</a>
-                            </c:when>
-
-                        </c:choose>
-                        <a href="/?page=${page}" class="active">${page}</a>
-
-                        <c:choose>
-                            <c:when test="${pages > page +4}">
-                                <a href="/?page=${page+1}">${page+1}</a>
-                                <a href="/?page=${page+2}">${page+2}</a>
-                                <a href="/?page=${page+3}">${page+3}</a>
-                                <a href="/?page=${page+4}">${page+4}</a>
-                            </c:when>
-                            <c:when test="${pages > page +3}">
-                                <a href="/?page=${page+1}">${page+1}</a>
-                                <a href="/?page=${page+2}">${page+2}</a>
-                                <a href="/?page=${page+3}">${page+3}</a>
-                            </c:when>
-                            <c:when test="${pages > page +2}">
-                                <a href="/?page=${page+1}">${page+1}</a>
-                                <a href="/?page=${page+2}">${page+2}</a>
-                            </c:when>
-                            <c:when test="${pages > page +1}">
-                                <a href="/?page=${page+1}">${page+1}</a>
-                            </c:when>
-
-
-                        </c:choose>
-
-
-                        <c:if test="${page < pages}">
-
-
-                            <span>&hellip;</span>
-                            <a href="/?page=${pages}">${pages}</a>
-                        </c:if>
-                    </div>
-
-                    <c:if test="${page < pages}">
-
-                        <a style="color: white" href="/?page=${page+1}" class="button next">Next Page</a>
-                    </c:if>
-                    <c:if test="${page > 1}">
-
-                        <a style="color: white" href="/?page=${page-1}" name="page" class="button next">Previous
-                            Page</a>
-                    </c:if>
-                </div>
-
+                   value="${_csrf.token}"/>
         </div>
     </div>
 
@@ -186,7 +84,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <c:if test="${ac ==true}">
 
 
-                    <li><a href="Update?id=0">Add Post</a></li>
+                    <li><a href="Update?id=0">Add Post / Images</a></li>
                     <li><a href="logout">Log Out</a></li>
                 </c:if>
 
@@ -303,13 +201,19 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <ul id="copyright">
             <li>&copy; Untitled.</li>
             <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            <li>Developed by : <br> <a href="https://vk.com/id86063569">Io</a> and <a href="https://vk.com/id183792251">Ktulhu</a>
-            </li>
         </ul>
 
     </div>
 
 </div>
-
+<div id="modal_form">
+    <span id="modal_close">X</span>
+    <div style="float: inherit; text-align: center"><h2 style="font-size: 20pt; margin-top: 10%; margin-bottom: 35%">Are you sure?</h2>
+        <button style="width: 50%;height: 5%" class="button" onclick="Reset()">Yes</button></div>
+</div>
+<div id="overlay"></div>
 </body>
 </html>
+
+
+

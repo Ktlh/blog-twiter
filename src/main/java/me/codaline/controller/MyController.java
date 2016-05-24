@@ -1,5 +1,6 @@
 package me.codaline.controller;
 
+import me.codaline.model.Activity;
 import me.codaline.model.Post;
 import me.codaline.service.EmailService;
 import me.codaline.model.User;
@@ -59,36 +60,22 @@ public class MyController {
         model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         return "index2";
     }
-//
-//    @RequestMapping("/login")
-//    String logIn() {
-//        return "login";
-//    }
-@RequestMapping(value = "userList",method = RequestMethod.GET)
-String uList(ModelMap model){
-    java.util.List<User> users=userService.getUsers();
-    model.addAttribute("users",users);
-    return "userList";
-}
-    @RequestMapping(value = "changeAccesss",method = RequestMethod.POST)
-    void ban(String username,boolean status){
-userService.setAccess(username,status);
-    }
-//    @RequestMapping(value = "unban",method = RequestMethod.POST)
-//    void unban(String username,boolean status){
-//        userService.setAccess(username,status);
-//    }
 
+    @RequestMapping(value = "userList", method = RequestMethod.GET)
+    String uList(ModelMap model) {
+        java.util.List<User> users = userService.getUsers();
+        model.addAttribute("users", users);
+        return "userList";
+    }
+
+    @RequestMapping(value = "changeAccesss", method = RequestMethod.POST)
+    void ban(String username, boolean status) {
+        userService.setAccess(username, status);
+    }
 
     @RequestMapping("/login")
     String logIn() {
         return "logIn";
-    }
-
-    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
-    String addPost(ModelMap modelMap, HttpServletRequest request) {
-        modelMap.addAttribute("images", imageService.getImages(request));
-        return "index1";
     }
 
     @RequestMapping("/registration")
@@ -96,15 +83,37 @@ userService.setAccess(username,status);
         return "registration";
     }
 
-
-
-
     @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("images", imageService.getImages(request));
         return "gallery";
     }
 
+    @RequestMapping(value = "/stat", method = RequestMethod.GET)
+    String statt(ModelMap model) {
+//        ArrayList<Activity> statistica=(ArrayList<Activity>) userService.getActivities();
+//model.addAttribute("stat",statistica);
+        return "usersStat";
+    }
+
+    @RequestMapping(value = "resetStat", method = RequestMethod.POST)
+    void resetStat(){
+        userService.cleanActivities();
+    }
+
+    @RequestMapping(value = "/stat")
+    @ResponseBody
+    String statt2() {
+        java.util.List<Activity> statistica = userService.getActivities();
+        String strings1=new String();
+        String strings2=new String();
+        for (int i = 0; i < statistica.size(); i++) {
+            strings1 += statistica.get(i).getLogcount()+"-";
+            strings2 += statistica.get(i).getLogin()+",";
+        }
+
+        return strings1+"+"+strings2;
+    }
 
     @RequestMapping("/sendMail")
     @ResponseBody
@@ -115,7 +124,7 @@ userService.setAccess(username,status);
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    String saveUser(ModelMap modelMap,String firstName, String userName, String email, String pass
+    String saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
     ) {
         userService.createUser(userName, pass, email, firstName);
 
