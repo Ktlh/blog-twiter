@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE HTML>
 <!--
@@ -72,18 +73,28 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
       <ul>
         <li class="current"><a href="/">Post</a></li>
 
-        <c:if test="${ac == null || ac == false}">
+        <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
           <li><a href="registration">Registration</a></li>
           <li><a href="login">Log In</a></li>
-        </c:if>
+        </sec:authorize>
         <li><a href="gallery">Gallery</a></li>
-        <c:if test="${ac ==true}">
 
 
-          <li><a href="Update?id=0">Add Post / Images</a></li>
+        <sec:authorize access="hasRole('ROLE_USER')" >
+
+
+          <li><a href="user/Update?id=0">Add Post</a></li>
           <li><a href="logout">Log Out</a></li>
-        </c:if>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ADMIN')" >
+          <li><a href="admin/userList">Ban List</a></li>
+          <li><a href="admin/stat">Stats</a></li>
+          <li><a href="admin/actions">Actions</a></li>
+          <li><a href="Update?id=0">Add Post</a></li>
+          <li><a href="logout">Log Out</a></li>
+
+        </sec:authorize>
 
       </ul>
     </nav>

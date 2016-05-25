@@ -1,6 +1,6 @@
 function Reset() {
     var token = $("#token").val();
-    $.post("/resetStat?_csrf=" + token);
+    $.post("admin/resetStat?_csrf=" + token);
     temp();
     function temp(){
         $('#modal_form')
@@ -14,7 +14,7 @@ function Reset() {
 }
 function loading() {
     var token = $("#token").val();
-    $.post("/stat?_csrf=" + token,
+    $.post("stat?_csrf=" + token,
     function (dataSource) {
         // var json = JSON.parse(dataSource);
         // var list = json.statt;

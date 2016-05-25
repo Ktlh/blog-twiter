@@ -49,8 +49,8 @@ public class PostController {
     ImageService imageService;
 
 
-    @Secured("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
+
+    @RequestMapping(value = "user/savefiles", method = RequestMethod.POST)
     @ResponseBody
     String savefiles(@ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
                      HttpServletRequest request) throws IllegalStateException, IOException, InterruptedException {
@@ -60,8 +60,8 @@ public class PostController {
         return temp2[temp2.length - 1];
     }
 
-    @Secured("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
+
+    @RequestMapping(value = "user/deletePost", method = RequestMethod.POST)
     String deletePost(ModelMap model, int id, String page) {
         String date = new Date(System.currentTimeMillis()).toString();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -80,8 +80,8 @@ public class PostController {
         return "index2";
     }
 
-    @Secured("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/Update", method = RequestMethod.GET)
+
+    @RequestMapping(value = "user/Update", method = RequestMethod.GET)
     String updatePost(ModelMap modelMap, HttpServletRequest request, int id) {
         if (id != 0) {
             Post post = service.getPost(id);
@@ -91,8 +91,8 @@ public class PostController {
         return "index1";
     }
 
-    @Secured("hasRole('ROLE_USER')")
-    @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
+
+    @RequestMapping(value = "user/updatePost", method = RequestMethod.POST)
     ModelAndView updatePost(int ID, String title, String context, String image) {
         String date = new Date(System.currentTimeMillis()).toString();
 //        try {
@@ -123,10 +123,5 @@ public class PostController {
         return "singlePage";
     }
 
-    @RequestMapping(value = "actions", method = RequestMethod.GET)
-    String act(ModelMap model) {
-        List<actions> actionses = service.getActions();
-        model.addAttribute("actions", actionses);
-        return "actionsList";
-    }
+
 }

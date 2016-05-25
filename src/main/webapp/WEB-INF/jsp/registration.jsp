@@ -23,12 +23,13 @@
                 <p><span class="fontawesome-user"></span><input  name="email" type="text" placeholder="Email"  required></p> <!-- JS because of IE support; better: placeholder="Username" -->
                 <p><span class="fontawesome-lock"></span><input name="pass" type="password"  placeholder="Password"  required></p> <!-- JS because of IE support; better: placeholder="Password" -->
                 <p><input type="submit" value="Registration"></p>
-                <p> <a href="/"> BAck</a></p>
+
             </fieldset>
             <input type="hidden" name="${_csrf.parameterName}"
                    value="${_csrf.token}" />
-        </form>
 
+        </form>
+        <a href="/"> <span class="fontawesome-arrow-left"> Back</span></a>
     </div>
 </body>
 </html>

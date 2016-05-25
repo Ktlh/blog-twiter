@@ -55,7 +55,7 @@
             <c:if test="${status == false}">
                 <p>False login or pass </p>
             </c:if>
-            <p><span class="fontawesome-user"></span><input name="username" type="text" placeholder="Email" required>
+            <p><span class="fontawesome-user"></span><input name="username" type="text" placeholder="Login" required>
             </p> <!-- JS because of IE support; better: placeholder="Username" -->
             <p><span class="fontawesome-lock"></span><input name="password" type="password" placeholder="pass" required>
             </p> <!-- JS because of IE support; better: placeholder="Password" -->
@@ -65,7 +65,7 @@
                value="${_csrf.token}"/>
     </form>
 
-    <a href="/"> BAck</a>
+    <a href="/"><span class="fontawesome-arrow-left"> Back </span></a>
 
     <p> &nbsp;&nbsp;<a href="registration">Registration</a><span class="fontawesome-arrow-right"></span></p>
 </div>

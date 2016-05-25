@@ -18,7 +18,7 @@ function Redirect() {
 function Ban(name,idi) {
     var token = $("#token").val();
     document.getElementById(idi).innerHTML='Baned;';
-    $.post("/changeAccesss?_csrf=" + token, {
+    $.post("admin/changeAccesss?_csrf=" + token, {
             username: name,
             status: false
         }
@@ -27,7 +27,7 @@ function Ban(name,idi) {
 function Unban(name,idi) {
     var token = $("#token").val();
     document.getElementById(idi).innerHTML='Available;';
-    $.post("/changeAccesss?_csrf=" + token, {
+    $.post("admin/changeAccesss?_csrf=" + token, {
             username: name,
             status: true
         }
@@ -52,7 +52,7 @@ function Upload() {
     var to2 = strstr1.length;
     var strstr2 = strstr1.substring(from2, to2);
     var token = $("#token").val();//DO NOT OPEN!!!
-    $.post("/savefiles?_csrf=" + token,
+    $.post("user/savefiles?_csrf=" + token,
         $form.serialize()
         ,
         function (data) {
@@ -71,7 +71,7 @@ function DeletePost(id) {
     var token = $("#token").val();
 
 
-    $.post("/deletePost?_csrf=" + token, {
+    $.post("user/deletePost?_csrf=" + token, {
 
             id: id
 

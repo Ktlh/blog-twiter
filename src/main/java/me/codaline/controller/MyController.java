@@ -61,22 +61,12 @@ public class MyController {
         return "index2";
     }
 
-    @RequestMapping(value = "userList", method = RequestMethod.GET)
-    String uList(ModelMap model) {
-        java.util.List<User> users = userService.getUsers();
-        model.addAttribute("users", users);
-        return "userList";
-    }
-
-    @RequestMapping(value = "changeAccesss", method = RequestMethod.POST)
-    void ban(String username, boolean status) {
-        userService.setAccess(username, status);
-    }
 
     @RequestMapping("/login")
     String logIn() {
-        return "logIn";
+        return "login";
     }
+
 
     @RequestMapping("/registration")
     String registration() {
@@ -87,40 +77,6 @@ public class MyController {
     String gallery(ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("images", imageService.getImages(request));
         return "gallery";
-    }
-
-    @RequestMapping(value = "/stat", method = RequestMethod.GET)
-    String statt(ModelMap model) {
-//        ArrayList<Activity> statistica=(ArrayList<Activity>) userService.getActivities();
-//model.addAttribute("stat",statistica);
-        return "usersStat";
-    }
-
-    @RequestMapping(value = "resetStat", method = RequestMethod.POST)
-    void resetStat(){
-        userService.cleanActivities();
-    }
-
-    @RequestMapping(value = "/stat")
-    @ResponseBody
-    String statt2() {
-        java.util.List<Activity> statistica = userService.getActivities();
-        String strings1=new String();
-        String strings2=new String();
-        for (int i = 0; i < statistica.size(); i++) {
-            strings1 += statistica.get(i).getLogcount()+"-";
-            strings2 += statistica.get(i).getLogin()+",";
-        }
-
-        return strings1+"+"+strings2;
-    }
-
-    @RequestMapping("/sendMail")
-    @ResponseBody
-    public String emailSender(String email, String user) {
-
-
-        return "Success";
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)

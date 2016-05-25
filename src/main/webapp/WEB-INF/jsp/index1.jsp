@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE HTML>
 <!--
@@ -110,7 +111,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
             <div id="NEWimage_container"></div>
             <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <form:form id="forma"  modelAttribute="uploadForm" target="frame_ajax" action="savefiles?${_csrf.parameterName}=${_csrf.token}"
+            <form:form id="forma"  modelAttribute="uploadForm" target="frame_ajax" action="user/savefiles?${_csrf.parameterName}=${_csrf.token}"
                        enctype="multipart/form-data">
 
                 <p>Select files to upload. .</p>
@@ -126,7 +127,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                        <%--value="${_csrf.token}" />--%>
                 <button class="button" name="Up" value="Upload" onclick="Upload()"></button>
             </form:form>
-            <iframe name="frame_ajax" src="savefiles?${_csrf.parameterName}=${_csrf.token}" width="0" height="0" style="display:none">
+            <iframe name="frame_ajax" src="user/savefiles?${_csrf.parameterName}=${_csrf.token}" width="0" height="0" style="display:none">
                             </iframe>
         </div>
     </div>
@@ -144,18 +145,28 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
             <ul>
                 <li class="current"><a href="/">Post</a></li>
 
-                <c:if test="${ac == null || ac == false}">
+                <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
                     <li><a href="registration">Registration</a></li>
                     <li><a href="login">Log In</a></li>
-                </c:if>
+                </sec:authorize>
                 <li><a href="gallery">Gallery</a></li>
-                <c:if test="${ac ==true}">
 
 
-                    <li><a href="Update?id=0">Add  Post</a></li>
+                <sec:authorize access="hasRole('ROLE_USER')" >
+
+
+                    <li><a href="user/Update?id=0">Add Post</a></li>
                     <li><a href="logout">Log Out</a></li>
-                </c:if>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                    <li><a href="admin/userList">Ban List</a></li>
+                    <li><a href="admin/stat">Stats</a></li>
+                    <li><a href="admin/actions">Actions</a></li>
+                    <li><a href="Update?id=0">Add Post</a></li>
+                    <li><a href="logout">Log Out</a></li>
+
+                </sec:authorize>
 
             </ul>
         </nav>
