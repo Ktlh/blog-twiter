@@ -17,7 +17,7 @@ function Redirect() {
 }
 function Ban(name,idi) {
     var token = $("#token").val();
-    document.getElementById(idi).innerHTML='Baned;';
+    document.getElementById(idi).innerHTML='<span style="color: crimson">Baned</span>;';
     $.post("admin/changeAccesss?_csrf=" + token, {
             username: name,
             status: false

@@ -54,7 +54,7 @@ function loading() {
     )
 }
 $(document).ready(function() {
-    $('a#go').click( function(event){ 
+    $('#go').click( function(event){ 
         event.preventDefault(); 
         $('#overlay').fadeIn(400, 
             function(){ 

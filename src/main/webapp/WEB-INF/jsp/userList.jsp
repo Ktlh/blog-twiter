@@ -53,8 +53,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <c:set var="count" value="${count=count+1}"/>
 <span style="font-size: 20pt; font-family: 'Open Sans Condensed', sans-serif;font-weight: 200; display: block; margin-top: 3em;color: #999;">
   User. Login: ${user.username}. Status:
-  <span id="${count}"> <c:if test="${user.enabled==false}">Baned;</c:if>
-  <c:if test="${user.enabled==true}">Available;</c:if>
+  <span id="${count}"> <c:if test="${user.enabled==false}"><span style="color: crimson">Baned</span>;</c:if>
+  <c:if test="${user.enabled==true}"><span style="color: forestgreen">Available</span>;</c:if>
   </span>
 
   <div style="float: right">
@@ -82,24 +82,23 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
-          <li><a href="registration">Registration</a></li>
-          <li><a href="login">Log In</a></li>
+          <li><a href="http://localhost:8080/registration">Registration</a></li>
+          <li><a href="http://localhost:8080/login">Log In</a></li>
         </sec:authorize>
-        <li><a href="gallery">Gallery</a></li>
+        <li><a href="http://localhost:8080/gallery">Gallery</a></li>
 
 
-        <sec:authorize access="hasRole('ROLE_USER')" >
+          <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" >
 
 
-          <li><a href="user/Update?id=0">Add Post</a></li>
-          <li><a href="logout">Log Out</a></li>
+            <li><a href="http://localhost:8080/user/Update?id=0">Add Post</a></li>
+            <li><a href="http://localhost:8080/logout">Log Out</a></li>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN')" >
-          <li><a href="admin/userList">Ban List</a></li>
-          <li><a href="admin/stat">Stats</a></li>
-          <li><a href="admin/actions">Actions</a></li>
-          <li><a href="Update?id=0">Add Post</a></li>
-          <li><a href="logout">Log Out</a></li>
+          <li><a href="http://localhost:8080/admin/userList">Ban List</a></li>
+          <li><a href="http://localhost:8080/admin/stat">Stats</a></li>
+          <li><a href="http://localhost:8080/admin/actions">Actions</a></li>
+
 
         </sec:authorize>
 

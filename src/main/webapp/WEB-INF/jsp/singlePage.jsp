@@ -70,18 +70,27 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
             <ul>
                 <li class="current"><a href="/">Post</a></li>
 
-                <c:if test="${ac == null || ac == false}">
+                <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
-                    <li><a href="registration">Registration</a></li>
-                    <li><a href="login">Log In</a></li>
-                </c:if>
-                <li><a href="gallery">Gallery</a></li>
-                <c:if test="${ac ==true}">
+                    <li><a href="http://localhost:8080/registration">Registration</a></li>
+                    <li><a href="http://localhost:8080/login">Log In</a></li>
+                </sec:authorize>
+                <li><a href="http://localhost:8080/gallery">Gallery</a></li>
 
 
-                    <li><a href="Update?id=0">Add Post / Images</a></li>
-                    <li><a href="logout">Log Out</a></li>
-                </c:if>
+                <sec:authorize access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" >
+
+
+                    <li><a href="http://localhost:8080/user/Update?id=0">Add Post</a></li>
+                    <li><a href="http://localhost:8080/logout">Log Out</a></li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_ADMIN')" >
+                    <li><a href="http://localhost:8080/admin/userList">Ban List</a></li>
+                    <li><a href="http://localhost:8080/admin/stat">Stats</a></li>
+                    <li><a href="http://localhost:8080/admin/actions">Actions</a></li>
+
+
+                </sec:authorize>
 
             </ul>
         </nav>

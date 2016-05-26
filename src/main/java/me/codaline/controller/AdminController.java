@@ -29,34 +29,38 @@ public class AdminController {
         model.addAttribute("users", users);
         return "userList";
     }
+
     @RequestMapping(value = "admin/changeAccesss", method = RequestMethod.POST)
     void ban(String username, boolean status) {
         userService.setAccess(username, status);
     }
+
     @RequestMapping(value = "admin/stat", method = RequestMethod.GET)
     String statt(ModelMap model) {
 //        ArrayList<Activity> statistica=(ArrayList<Activity>) userService.getActivities();
 //model.addAttribute("stat",statistica);
         return "usersStat";
     }
+
     @RequestMapping(value = "admin/resetStat", method = RequestMethod.POST)
-    void resetStat(){
+    void resetStat() {
         userService.cleanActivities();
     }
 
-    @RequestMapping(value = "admin/stat",method = RequestMethod.POST)
+    @RequestMapping(value = "admin/stat", method = RequestMethod.POST)
     @ResponseBody
     String statt2() {
         java.util.List<Activity> statistica = userService.getActivities();
-        String strings1=new String();
-        String strings2=new String();
+        String strings1 = new String();
+        String strings2 = new String();
         for (int i = 0; i < statistica.size(); i++) {
-            strings1 += statistica.get(i).getLogcount()+"-";
-            strings2 += statistica.get(i).getLogin()+",";
+            strings1 += statistica.get(i).getLogcount() + "-";
+            strings2 += statistica.get(i).getLogin() + ",";
         }
 
-        return strings1+"+"+strings2;
+        return strings1 + "+" + strings2;
     }
+
     @RequestMapping(value = "admin/actions", method = RequestMethod.GET)
     String act(ModelMap model) {
         List<actions> actionses = service.getActions();

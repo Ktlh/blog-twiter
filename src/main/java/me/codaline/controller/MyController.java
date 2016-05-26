@@ -73,23 +73,23 @@ public class MyController {
         return "registration";
     }
 
-    @RequestMapping("/gallery")
+        @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("images", imageService.getImages(request));
         return "gallery";
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    String saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
+    void saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
     ) {
         userService.createUser(userName, pass, email, firstName);
 
         emailService.send(email, userName);
-        java.util.List<Post> posts = postService.getPosts();
-        modelMap.addAttribute("posts", posts);
-        modelMap.addAttribute("page", 1);
-        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-        return "index2";
+//        java.util.List<Post> posts = postService.getPosts();
+//        modelMap.addAttribute("posts", posts);
+//        modelMap.addAttribute("page", 1);
+//        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+//        return "index2";
     }
 
 
@@ -99,7 +99,7 @@ public class MyController {
 
         emailService.confirmEmail(code);
 
-        return "Success " + code;
+        return "login";
     }
 
 

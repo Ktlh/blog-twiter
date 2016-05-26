@@ -67,7 +67,7 @@
 
     <a href="/"><span class="fontawesome-arrow-left"> Back </span></a>
 
-    <p> &nbsp;&nbsp;<a href="registration">Registration</a><span class="fontawesome-arrow-right"></span></p>
+   <div style="float: right"><a href="registration">Registration</a><span class="fontawesome-arrow-right"></span></div>
 </div>
 </body>
 </html>
