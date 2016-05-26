@@ -1,6 +1,6 @@
 function Reset() {
     var token = $("#token").val();
-    $.post("admin/resetStat?_csrf=" + token);
+    $.post("resetStat?_csrf=" + token);
     temp();
     function temp(){
         $('#modal_form')
