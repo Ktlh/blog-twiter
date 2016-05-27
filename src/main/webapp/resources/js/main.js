@@ -52,7 +52,7 @@ function Upload() {
     var to2 = strstr1.length;
     var strstr2 = strstr1.substring(from2, to2);
     var token = $("#token").val();//DO NOT OPEN!!!
-    $.post("user/savefiles?_csrf=" + token,
+    $.post("savefiles?_csrf=" + token,
         $form.serialize()
         ,
         function (data) {
