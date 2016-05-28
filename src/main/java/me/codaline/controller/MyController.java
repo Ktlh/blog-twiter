@@ -81,6 +81,10 @@ public class MyController {
         return "registration";
     }
 
+    @RequestMapping("/welldone")
+    String welldone(){
+        return "welldone";
+    }
         @RequestMapping("/gallery")
     String gallery(ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("images", imageService.getImages(request));
@@ -88,29 +92,23 @@ public class MyController {
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    String saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
+    ModelAndView saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
     ) {
         userService.createUser(userName, pass, email, firstName);
 
         emailService.send(email, userName);
 
-//        java.util.List<Post> posts = postService.getPosts();
-//        modelMap.addAttribute("posts", posts);
-//        modelMap.addAttribute("page", 1);
-//        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
-//        return "index2";
         postService.createPost("Your  post ","Edit this post or add new","","\\resources\\images\\kitchen_adventurer_cheesecake_brownie.jpg ",userName);
 
-        return "login";
+return new ModelAndView("redirect:/welldone");
     }
 
 
     @RequestMapping("/getMail/{code}")
-    public void emailGetter(@PathVariable String code) {
+    ModelAndView emailGetter(@PathVariable String code) {
 
         emailService.confirmEmail(code);
-
-
+return new ModelAndView("redirect:/");
     }
 
 
