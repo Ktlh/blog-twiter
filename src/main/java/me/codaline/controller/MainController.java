@@ -35,12 +35,18 @@ public class MainController {
     public ModelAndView defaul() {
         String date = new Date(System.currentTimeMillis()).toString();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = null ;
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            userDetail = (UserDetails) auth.getPrincipal();
             service.setAction(userDetail.getUsername(), "login in ", null, date);
             userService.upActivity(userDetail.getUsername());
+            if(service.getPosts(userDetail.getUsername()).size()<1)
+            {
+                service.createPost("Your  post ","Edit this post or add new","","\\resources\\images\\kitchen_adventurer_cheesecake_brownie.jpg ",userDetail.getUsername());
+
+            }
         }
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/user"+userDetail.getUsername());
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

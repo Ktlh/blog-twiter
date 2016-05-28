@@ -18,7 +18,7 @@ function Redirect() {
 function Ban(name,idi) {
     var token = $("#token").val();
     document.getElementById(idi).innerHTML='<span style="color: crimson">Baned</span>;';
-    $.post("admin/changeAccesss?_csrf=" + token, {
+    $.post("changeAccesss?_csrf=" + token, {
             username: name,
             status: false
         }
@@ -26,8 +26,8 @@ function Ban(name,idi) {
 }
 function Unban(name,idi) {
     var token = $("#token").val();
-    document.getElementById(idi).innerHTML='Available;';
-    $.post("admin/changeAccesss?_csrf=" + token, {
+    document.getElementById(idi).innerHTML='<span style="color: forestgreen">Available</span>;';
+    $.post("changeAccesss?_csrf=" + token, {
             username: name,
             status: true
         }

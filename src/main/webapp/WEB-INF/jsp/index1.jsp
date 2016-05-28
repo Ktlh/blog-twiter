@@ -111,7 +111,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
             <div id="NEWimage_container"></div>
             <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <form:form id="forma"  modelAttribute="uploadForm" target="frame_ajax" action="http://localhost:8080/user/savefiles?${_csrf.parameterName}=${_csrf.token}"
+            <form:form id="forma"  modelAttribute="uploadForm" target="frame_ajax" action="http://localhost:8080/user//savefiles?${_csrf.parameterName}=${_csrf.token}"
                        enctype="multipart/form-data">
 
                 <p>Select files to upload. .</p>

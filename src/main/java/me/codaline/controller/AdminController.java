@@ -6,6 +6,9 @@ import me.codaline.model.actions;
 import me.codaline.service.PostService;
 import me.codaline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,9 @@ public class AdminController {
     @RequestMapping(value = "admin/userList", method = RequestMethod.GET)
     String uList(ModelMap model) {
         java.util.List<User> users = userService.getUsers();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        model.addAttribute("currentUser",userDetail.getUsername());
         model.addAttribute("users", users);
         return "userList";
     }
@@ -37,6 +43,9 @@ public class AdminController {
 
     @RequestMapping(value = "admin/stat", method = RequestMethod.GET)
     String statt(ModelMap model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        model.addAttribute("currentUser",userDetail.getUsername());
 //        ArrayList<Activity> statistica=(ArrayList<Activity>) userService.getActivities();
 //model.addAttribute("stat",statistica);
         return "usersStat";
@@ -64,6 +73,9 @@ public class AdminController {
     @RequestMapping(value = "admin/actions", method = RequestMethod.GET)
     String act(ModelMap model) {
         List<actions> actionses = service.getActions();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        model.addAttribute("currentUser",userDetail.getUsername());
         model.addAttribute("actions", actionses);
         return "actionsList";
     }

@@ -29,8 +29,12 @@ public class PostDao {
         sessionFactory.getCurrentSession().saveOrUpdate(post);
     }
 
-    public List<Post> getPosts() {
-        return sessionFactory.getCurrentSession().createCriteria(Post.class).addOrder(Property.forName("id").desc()).list();
+    public List<Post> getPosts(String username) {
+//        return sessionFactory.getCurrentSession().createCriteria(Post.class).addOrder(Property.forName("id").desc()).list();
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Post.class);
+        criteria.add(Restrictions.eq("username",username));
+        return criteria.addOrder(Property.forName("id").desc()).list();
+
     }
     public Post getPost(int id){
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Post.class);

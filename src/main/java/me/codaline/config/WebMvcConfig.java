@@ -45,6 +45,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/admin/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/user/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/getMail/resources/**").addResourceLocations("/resources/");
 
 
         //registry.addResourceHandler("/ROOT/resources/**").addResourceLocations("/resources/images/");
