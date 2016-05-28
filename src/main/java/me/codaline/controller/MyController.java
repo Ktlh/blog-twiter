@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -39,29 +40,36 @@ public class MyController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/")
-    String index(ModelMap model, String page) {
-        java.util.List<Post> posts = postService.getPosts();
-        model.addAttribute("posts", posts);
+    @RequestMapping("/user{userName}")
+    String index(ModelMap model, String page, @PathVariable String userName) {
+        java.util.List<Post> posts = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            System.out.println(userDetail);
+            posts =  postService.getPosts(userName);
+            model.addAttribute("posts", posts);
+            model.addAttribute("userName",userName);
+            model.addAttribute("currentUser",userDetail.getUsername());
 
             model.addAttribute("username", userDetail.getUsername());
             model.addAttribute("access", true);
 
+            if (page != null)
+                model.addAttribute("page", page);
+            else model.addAttribute("page", 1);
+            model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
         }
 
-        if (page != null)
-            model.addAttribute("page", page);
-        else model.addAttribute("page", 1);
-        model.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
+
         return "index2";
     }
 
 
+    @RequestMapping("/")
+    String main() {
+        return "login";
+    }
     @RequestMapping("/login")
     String logIn() {
         return "login";
@@ -80,26 +88,29 @@ public class MyController {
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    void saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
+    String saveUser(ModelMap modelMap, String firstName, String userName, String email, String pass
     ) {
         userService.createUser(userName, pass, email, firstName);
 
         emailService.send(email, userName);
+
 //        java.util.List<Post> posts = postService.getPosts();
 //        modelMap.addAttribute("posts", posts);
 //        modelMap.addAttribute("page", 1);
 //        modelMap.addAttribute("pages", (posts.size() / 2) + posts.size() % 2);
 //        return "index2";
+        postService.createPost("Your  post ","Edit this post or add new","","\\resources\\images\\kitchen_adventurer_cheesecake_brownie.jpg ",userName);
+
+        return "login";
     }
 
 
     @RequestMapping("/getMail/{code}")
-    @ResponseBody
-    public String emailGetter(@PathVariable String code) {
+    public void emailGetter(@PathVariable String code) {
 
         emailService.confirmEmail(code);
 
-        return "login";
+
     }
 
 

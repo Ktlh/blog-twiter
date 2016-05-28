@@ -69,7 +69,7 @@ public class PostController {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
             service.deletePost(id);
             service.setAction(userDetail.getUsername(), "delete post with id:" + id, null, date);
-            List<Post> posts = service.getPosts();
+            List<Post> posts = service.getPosts(userDetail.getUsername());
             model.addAttribute("posts", posts);
             if (page != null)
                 model.addAttribute("page", page);
@@ -88,6 +88,9 @@ public class PostController {
             modelMap.addAttribute("post", post);
         }
         modelMap.addAttribute("images", imageService.getImages(request));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        modelMap.addAttribute("currentUser",userDetail.getUsername());
         return "index1";
     }
 
@@ -96,14 +99,16 @@ public class PostController {
     ModelAndView updatePost(int ID, String title, String context, String image) {
         String date = new Date(System.currentTimeMillis()).toString();
 //        try {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = null;
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+          userDetail = (UserDetails) auth.getPrincipal();
             if (ID != 0) {
-                service.update(ID, title, date, context, image);
+                service.update(ID, title, date, context, image, userDetail.getUsername() );
                 service.setAction(userDetail.getUsername(), "modified ", "http://localhost:8080/material?id=" + ID, date);
             } else {
-                Post post = service.createPost(title, context, date, image);
+                Post post = service.createPost(title, context, date, image, userDetail.getUsername());
                 service.setAction(userDetail.getUsername(), "add new ", "http://localhost:8080/material?id=" + post.getId(), date);
             }
 
@@ -113,13 +118,16 @@ public class PostController {
 //        }
 
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/user"+userDetail.getUsername());
     }
 
     @RequestMapping(value = "material", method = RequestMethod.GET)
     String singlePage(ModelMap model, int id) {
         Post post = service.getPost(id);
         model.addAttribute("post", post);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        model.addAttribute("currentUser",userDetail.getUsername());
         return "singlePage";
     }
 

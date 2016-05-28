@@ -32,7 +32,7 @@ public class UserService {
         user.setEmail(email);
         user.setFirstName(firstName);
         UserRole userRole = new UserRole();
-        userRole.setRole("USER_ROLE");
+        userRole.setRole("ROLE_USER");
         userRole.setUser(user);
         dao.saveUser(user, userRole);
         Activity activity = new Activity();

@@ -15,7 +15,15 @@ public class Post {
     String context;
     String date;
     String image;
+    String username;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public void setImage(String image) {
         this.image = image;
