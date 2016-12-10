@@ -64,12 +64,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <!-- Logo -->
 
-        <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
+        <h1 id="logo"><a href="http://localhost:8080/user/${currentUser}">Blog</a></h1>
 
         <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li class="current"><a href="http://localhost:8080/user${currentUser}">Post</a></li>
+                <li class="current"><a href="http://localhost:8080/user/${currentUser}">Post</a></li>
 
                 <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
@@ -82,7 +82,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <sec:authorize access="hasRole('ROLE_ADMIN')" >
                     <li><a href="http://localhost:8080/admin/userList">Ban List</a></li>
                     <li><a href="http://localhost:8080/admin/stat">Stats</a></li>
-                    <li><a href="http://localhost:8080/admin/actions">Actions</a></li>
+                    <li><a href="http://localhost:8080/admin/users">Users</a></li>
 
 
                 </sec:authorize>

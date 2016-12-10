@@ -21,6 +21,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
   <script src="../../resources/js/skel-layers.min.js"></script>
   <script src="../../resources/js/init.js"></script>
   <script src="../../resources/js/main.js"></script>
+  <script src="../../resources/js/actions.js"></script>
 
   <link rel="stylesheet" href="../../resources/css/skel.css"/>
   <link rel="stylesheet" href="../../resources/css/style.css"/>
@@ -43,19 +44,18 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
   <!-- Content -->
   <div id="content">
     <div class="inner">
+      <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <script language="javascript" type="text/javascript"
               src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-      <h2 style="font-size: 30pt">Actions list</h2>
+      <h2 style="font-size: 30pt">Users list</h2>
       <hr>
-<c:forEach var="action" items="${actions}">
+<c:forEach var="user" items="${users}">
   <span style="font-size: 20pt; font-family: 'Open Sans Condensed', sans-serif;font-weight: 200; display: block; margin-top: 3em;color: #999;">
 
-<p>User with name ${action.user} ${action.action}<c:if test="${action.href!=null}">
-  <a href="${action.href}">post</a>
-  </c:if>
-   at ${action.date}</p>
+<p>User with name - <span style="font-size: 22pt; font-family: Verdana; color: #747474">${user.username}</span>
+  <button style="width: 20%;height: 5%; float: right " class="button" onclick="getDetails('${user.username}')">Show Details</button>
+    </p>
       </span>
-  <hr>
 </c:forEach>
     </div>
   </div>
@@ -66,12 +66,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
     <!-- Logo -->
 
-    <h1 id="logo"><a href="#">Blog<c:if test="${ac == true}">${user.firstName }</c:if> </a></h1>
+    <h1 id="logo"><a href="http://localhost:8080/user/${currentUser}">Blog</a></h1>
 
     <!-- Nav -->
     <nav id="nav">
       <ul>
-        <li><a href="http://localhost:8080/user${currentUser}">Post</a></li>
+        <li class="current"><a href="http://localhost:8080/user/${currentUser}">Post</a></li>
 
         <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
@@ -84,7 +84,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <sec:authorize access="hasRole('ROLE_ADMIN')" >
           <li><a href="http://localhost:8080/admin/userList">Ban List</a></li>
           <li><a href="http://localhost:8080/admin/stat">Stats</a></li>
-          <li class="current"><a  href="http://localhost:8080/admin/actions">Actions</a></li>
+          <li class="current"><a  href="http://localhost:8080/admin/users">Users</a></li>
 
 
         </sec:authorize>

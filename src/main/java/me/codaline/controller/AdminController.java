@@ -1,5 +1,6 @@
 package me.codaline.controller;
 
+import com.sun.istack.internal.Nullable;
 import me.codaline.model.Activity;
 import me.codaline.model.User;
 import me.codaline.model.actions;
@@ -11,10 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +27,8 @@ public class AdminController {
     PostService service;
     @Autowired
     UserService userService;
+    @Autowired
+    PostService postService;
 
 
     @RequestMapping(value = "admin/userList", method = RequestMethod.GET)
@@ -31,7 +36,7 @@ public class AdminController {
         java.util.List<User> users = userService.getUsers();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        model.addAttribute("currentUser",userDetail.getUsername());
+        model.addAttribute("currentUser", userDetail.getUsername());
         model.addAttribute("users", users);
         return "userList";
     }
@@ -45,7 +50,7 @@ public class AdminController {
     String statt(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        model.addAttribute("currentUser",userDetail.getUsername());
+        model.addAttribute("currentUser", userDetail.getUsername());
 //        ArrayList<Activity> statistica=(ArrayList<Activity>) userService.getActivities();
 //model.addAttribute("stat",statistica);
         return "usersStat";
@@ -70,13 +75,31 @@ public class AdminController {
         return strings1 + "+" + strings2;
     }
 
-    @RequestMapping(value = "admin/actions", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/users", method = RequestMethod.GET)
     String act(ModelMap model) {
-        List<actions> actionses = service.getActions();
+        List<User> users = userService.getUsers();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        model.addAttribute("currentUser",userDetail.getUsername());
-        model.addAttribute("actions", actionses);
-        return "actionsList";
+        model.addAttribute("currentUser", userDetail.getUsername());
+        model.addAttribute("users", users);
+        return "usersInfoList";
+    }
+
+    @RequestMapping(value = "admin/aboutUser/{userName}", method = RequestMethod.GET)
+    String aboutUser(ModelMap model, @PathVariable String userName) {
+        List<actions> actionses = service.getActions();
+        List<actions> actionsesOut = new ArrayList<actions>();
+        for (actions act : actionses) {
+            if (act.getUser().equals(userName)) {
+                actionsesOut.add(act);
+            }
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        model.addAttribute("currentUser", userDetail.getUsername());
+        model.addAttribute("actions", actionsesOut);
+        model.addAttribute("countPosts",postService.getPosts(userName).size());
+        model.addAttribute("user",userService.getUser(userName));
+        return "aboutUser";
     }
 }

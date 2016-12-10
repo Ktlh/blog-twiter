@@ -49,7 +49,6 @@ public class PostController {
     ImageService imageService;
 
 
-
     @RequestMapping(value = "user/savefiles", method = RequestMethod.POST)
     @ResponseBody
     String savefiles(@ModelAttribute("uploadForm") CrunchifyFileUpload uploadForm,
@@ -90,7 +89,7 @@ public class PostController {
         modelMap.addAttribute("images", imageService.getImages(request));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        modelMap.addAttribute("currentUser",userDetail.getUsername());
+        modelMap.addAttribute("currentUser", userDetail.getUsername());
         return "index1";
     }
 
@@ -103,9 +102,9 @@ public class PostController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = null;
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-          userDetail = (UserDetails) auth.getPrincipal();
+            userDetail = (UserDetails) auth.getPrincipal();
             if (ID != 0) {
-                service.update(ID, title, date, context, image, userDetail.getUsername() );
+                service.update(ID, title, date, context, image, userDetail.getUsername());
                 service.setAction(userDetail.getUsername(), "modified ", "http://localhost:8080/material?id=" + ID, date);
             } else {
                 Post post = service.createPost(title, context, date, image, userDetail.getUsername());
@@ -118,16 +117,16 @@ public class PostController {
 //        }
 
 
-        return new ModelAndView("redirect:/user"+userDetail.getUsername());
+        return new ModelAndView("redirect:/user" + userDetail.getUsername());
     }
 
-    @RequestMapping(value = "material", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/material", method = RequestMethod.GET)
     String singlePage(ModelMap model, int id) {
         Post post = service.getPost(id);
         model.addAttribute("post", post);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        model.addAttribute("currentUser",userDetail.getUsername());
+        model.addAttribute("currentUser", userDetail.getUsername());
         return "singlePage";
     }
 

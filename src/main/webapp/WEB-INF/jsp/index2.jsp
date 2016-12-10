@@ -61,27 +61,27 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                         if they get too long. You can also remove the <p> entirely if you don't
                         need a subtitle.
                     -->
-                    <h2><a href="material?id=${p.id}">${p.title}</a></h2>
+                    <h2><a href="/user/material?id=${p.id}">${p.title}</a></h2>
                 </header>
                 <p>${p.context}</p>
 
-                <a href="material?id=${p.id}" class="image featured"><img height="100%" width="100%" src="${p.image}"
+                <a href="/user/material?id=${p.id}" class="image featured"><img height="100%" width="100%" src="${p.image}"
                                                                           alt=""/></a>
                     <c:set var="count" scope="session" value="1"/>
                 <c:if test="${ac == true}">
                     <sec:authorize access=" hasRole('ROLE_ADMIN')"  >
 
-                  <input type="hidden" value="${userName = currentUser}">
+                  <c:set var="adminFlag" scope="session" value="1"/>
                 </sec:authorize>
 
-                <c:if test="${(userName == currentUser)}">
+                <c:if test="${(userName == currentUser || adminFlag==1)}">
 
 
                 <button class="button" id="DeleteButton" value="Delete post" onclick="DeletePost(${p.id})">Delete post
                 </button>
                     <%--<button class="button" id="EditButton" value="Edit" onclick="EditPost(${p.id})">Edit</button>--%>
                 <a style="color: white; float: right" class="button" id="EditButton" href="user/Update?id=${p.id}">Edit</a>
-
+                    <c:set var="adminFlag" scope="session" value="0"/>
                 </c:if>
                 </c:if>
 
@@ -112,39 +112,39 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
                         <c:choose>
                             <c:when test="${page>3}">
-                                <a href="http://localhost:8080/user${userName}?page=${page-3}">${page-3}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page-2}">${page-2}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page-1}">${page-1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-3}">${page-3}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-2}">${page-2}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-1}">${page-1}</a>
                             </c:when>
                             <c:when test="${page>2}">
-                                <a href="http://localhost:8080/user${userName}?page=${page-2}">${page-2}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page-1}">${page-1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-2}">${page-2}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-1}">${page-1}</a>
                             </c:when>
                             <c:when test="${page>1}">
-                                <a href="http://localhost:8080/user${userName}?page=${page-1}">${page-1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page-1}">${page-1}</a>
                             </c:when>
 
                         </c:choose>
-                        <a href="http://localhost:8080/user${userName}?page=${page}" class="active">${page}</a>
+                        <a href="http://localhost:8080/user/${userName}?page=${page}" class="active">${page}</a>
 
                         <c:choose>
                             <c:when test="${pages > page +4}">
-                                <a href="http://localhost:8080/user${userName}?page=${page+1}">${page+1}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+2}">${page+2}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+3}">${page+3}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+4}">${page+4}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+1}">${page+1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+2}">${page+2}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+3}">${page+3}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+4}">${page+4}</a>
                             </c:when>
                             <c:when test="${pages > page +3}">
-                                <a href="http://localhost:8080/user${userName}?page=${page+1}">${page+1}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+2}">${page+2}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+3}">${page+3}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+1}">${page+1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+2}">${page+2}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+3}">${page+3}</a>
                             </c:when>
                             <c:when test="${pages > page +2}">
-                                <a href="http://localhost:8080/user${userName}?page=${page+1}">${page+1}</a>
-                                <a href="http://localhost:8080/user${userName}?page=${page+2}">${page+2}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+1}">${page+1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+2}">${page+2}</a>
                             </c:when>
                             <c:when test="${pages > page +1}">
-                                <a href="http://localhost:8080/user${userName}?page=${page+1}">${page+1}</a>
+                                <a href="http://localhost:8080/user/${userName}?page=${page+1}">${page+1}</a>
                             </c:when>
 
 
@@ -154,17 +154,17 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
 
                             <span>&hellip;</span>
-                            <a href="http://localhost:8080/user${userName}/?page=${pages}">${pages}</a>
+                            <a href="http://localhost:8080/user/${userName}/?page=${pages}">${pages}</a>
                         </c:if>
                     </div>
 
                     <c:if test="${page < pages}">
 
-                        <a style="color: white" href="http://localhost:8080/user${userName}/?page=${page+1}" class="button next">Next Page</a>
+                        <a style="color: white" href="http://localhost:8080/user/${userName}/?page=${page+1}" class="button next">Next Page</a>
                     </c:if>
                     <c:if test="${page > 1}">
 
-                        <a style="color: white" href="http://localhost:8080/user${userName}/?page=${page-1}" name="page" class="button next">Previous
+                        <a style="color: white" href="http://localhost:8080/user/${userName}/?page=${page-1}" name="page" class="button next">Previous
                             Page</a>
                     </c:if>
                 </div>
@@ -178,12 +178,12 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
         <!-- Logo -->
 
-        <h1 id="logo"><a href="http://localhost:8080/user${userName}">Blog</a></h1>
+        <h1 id="logo"><a href="http://localhost:8080/user/${currentUser}">Blog</a></h1>
 
         <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li class="current"><a href="http://localhost:8080/user${currentUser}">Post</a></li>
+                <li class="current"><a href="http://localhost:8080/user/${currentUser}">Post</a></li>
 
                 <sec:authorize access="hasRole('ROLE_ANONYMOUS')" >
 
@@ -196,7 +196,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 <sec:authorize access="hasRole('ROLE_ADMIN')" >
                     <li><a href="http://localhost:8080/admin/userList">Ban List</a></li>
                     <li><a href="http://localhost:8080/admin/stat">Stats</a></li>
-                    <li><a href="http://localhost:8080/admin/actions">Actions</a></li>
+                    <li><a href="http://localhost:8080/admin/users">Users</a></li>
 
 
                 </sec:authorize>

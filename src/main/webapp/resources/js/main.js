@@ -12,6 +12,8 @@
 //    )
 //    event.preventDefault();
 //});
+
+
 function Redirect() {
     window.location.href="http://localhost:8080/404";
 }
